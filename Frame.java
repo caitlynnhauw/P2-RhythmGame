@@ -18,9 +18,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	Background 	b = new Background(0, 0);
 	Bird bird = new Bird(0, 0);
+	Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav", false);
+	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		
+		m.run();
 		
 		
 		
@@ -28,7 +30,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		b.paint(g);
 	
 		bird.paint(g);
+		
+		int red =((int)(Math.random() * 255));
+		int green =((int)(Math.random() * 255));
+		int blue =((int)(Math.random() * 255));
+		g.setColor(new Color(red, green, blue));
+		
+		g.fillRect(100, 100, 50, 50);
+		
+		
+		
 	}
+	
 	
 	public static void main(String[] arg) {
 		Frame f = new Frame();
@@ -79,6 +92,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		
 	}
+	
+	Timer t = new Timer((int) 461.538461538, this); 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
