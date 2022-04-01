@@ -18,12 +18,29 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	Background 	b = new Background(0, 0);
 	Bird bird = new Bird(0, 0);
-	Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav", false);
-	
+	//Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav", false);
+	Boolean[][] tetris = new Boolean[20][10];
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		m.run();
-		
+		//m.run();
+		for(int row = 0; row < tetris.length; row++) {
+			for(int col = 0; col < tetris[row].length; col++) {
+				tetris[row][col] = true;
+			}
+		}
+		tetris[7][2] = false;
+		tetris[4][6] = false;
+		tetris[9][9] = false;
+		for(int row = 0; row < tetris.length; row++) {
+			for(int col = 0; col < tetris[row].length; col++) {
+				if(tetris[row][col]) {
+					g.setColor(Color.green);
+					}else {
+						g.setColor(Color.red);
+					}
+				g.fillRect((col*40)+100, (row*40)+10, 35, 35);
+			}
+		}
 		
 		
 		//ask the objects to paint themselves
@@ -36,7 +53,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		int blue =((int)(Math.random() * 255));
 		g.setColor(new Color(red, green, blue));
 		
-		g.fillRect(100, 100, 50, 50);
+		//g.fillRect(100, 100, 50, 50);
 		
 		
 		
@@ -48,8 +65,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 	
 	public Frame() {
-		JFrame f = new JFrame("Duck Hunt");
-		f.setSize(new Dimension(400, 600));
+		JFrame f = new JFrame("Tetris");
+		f.setSize(new Dimension(700, 900));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
