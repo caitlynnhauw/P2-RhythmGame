@@ -16,47 +16,54 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	Background 	b = new Background(0, 0);
-	Bird bird = new Bird(0, 0);
+	Background 	b = new Background(170, 60);
+	Bird bird = new Bird(-50, 0);
+	Blocks blue = new Blocks(100, 100, "blue");
+	Blocks navy = new Blocks(100, 135, "navy");
+	Blocks purple = new Blocks(135, 100, "purple");
+	Blocks sky = new Blocks(135, 135, "sky");
+	O test = new O(200, 100, "blue");
+	
 	//Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav", false);
-	Boolean[][] tetris = new Boolean[20][10];
+	Blocks[][] tetris = new Blocks[20][10];
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		//m.run();
-		for(int row = 0; row < tetris.length; row++) {
-			for(int col = 0; col < tetris[row].length; col++) {
-				tetris[row][col] = true;
-			}
-		}
-		tetris[7][2] = false;
-		tetris[4][6] = false;
-		tetris[9][9] = false;
-		for(int row = 0; row < tetris.length; row++) {
-			for(int col = 0; col < tetris[row].length; col++) {
-				if(tetris[row][col]) {
-					g.setColor(Color.green);
-					}else {
-						g.setColor(Color.red);
-					}
-				g.fillRect((col*40)+100, (row*40)+10, 35, 35);
+		
+		Blocks[][] OShape = new Blocks[2][2];
+		OShape[0][0] = blue; 
+		OShape[0][1] = navy; 
+		OShape[1][0] = purple;
+		OShape[1][1] = sky; 
+		
+		for(int row = 0; row < OShape.length; row++) {
+			for(int col = 0; col < OShape[row].length; col++) {
+				if(OShape[row][col] != null) {
+					OShape[row][col].paint(g);
+				}
 			}
 		}
 		
 		
 		//ask the objects to paint themselves
+
 		b.paint(g);
 	
 		bird.paint(g);
 		
+		blue.paint(g);
+		navy.paint(g);
+		purple.paint(g);
+		sky.paint(g);
+		
+		//for(int r = 0; r < test.length; )
+		test.paint(g);
 		int red =((int)(Math.random() * 255));
 		int green =((int)(Math.random() * 255));
 		int blue =((int)(Math.random() * 255));
 		g.setColor(new Color(red, green, blue));
 		
-		//g.fillRect(100, 100, 50, 50);
-		
-		
-		
+		//g.fillRect(100, 100, 50, 50);	
 	}
 	
 	
@@ -77,6 +84,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
+		blue.squareShape();
 	}
 	
 	

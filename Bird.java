@@ -17,7 +17,7 @@ public class Bird{
 	public Bird(int x, int y) {
 		this.x = x;
 		this.y = y;
-		img = getImage("mrdavid.png"); //load the image for Tree
+		img = getImage("/ASSets/mrdavid.png"); //load the image for Tree
 
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y); 				//initialize the location of the image
@@ -44,7 +44,7 @@ public class Bird{
 		
 		
 		tx.setToTranslation(x, y);
-		tx.scale(1	, 1);
+		tx.scale(3	, 3);
 	}
 	
 	private void init(double a, double b) {

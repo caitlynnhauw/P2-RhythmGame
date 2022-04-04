@@ -15,7 +15,7 @@ public class Background{
 	private AffineTransform tx;
 
 	public Background(int x, int y) {
-		img = getImage("/imgs/bg.png"); //load the image for Tree
+		img = getImage("/ASSets/tetrisboard.png"); //load the image for Tree
 		this.x = x;
 		this.y = y;
 		tx = AffineTransform.getTranslateInstance(x, y );
@@ -43,7 +43,7 @@ public class Background{
 	/* update the picture variable location */
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(2.8, 2.8);
+		tx.scale(1, 1);
 	}
 	
 	private void init(double a, double b) {
