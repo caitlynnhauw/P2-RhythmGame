@@ -22,7 +22,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Blocks navy = new Blocks(100, 135, "navy");
 	Blocks purple = new Blocks(135, 100, "purple");
 	Blocks sky = new Blocks(135, 135, "sky");
-
+	Board best = new Board();
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
@@ -67,6 +67,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				tetris[r][c] = temp;
 			}
 		}
+		best.spawn("S");
+		best.toString();
 
 		JFrame f = new JFrame("Tetris");
 		f.setSize(new Dimension(700, 900));
