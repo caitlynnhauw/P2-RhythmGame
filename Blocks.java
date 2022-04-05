@@ -11,7 +11,8 @@ public class Blocks {
 	//add location attributes
 		private Image img; 	
 		private AffineTransform tx;
-		private int x, y, vx, vy;
+		private int x, y, vx;
+		private int vy = 0;
 		private int width, height;
 		private int random;
 		Random rnd = new Random(1234);
@@ -50,8 +51,7 @@ public class Blocks {
 		}
 		/* update the picture variable location */
 		private void update() {
-
-			y+= vy;
+			
 			random = rnd.nextInt(420)+0;
 	
 			
@@ -67,6 +67,10 @@ public class Blocks {
 			OShape[1][0] = bottomLeft;
 			OShape[1][1] = bottomRight; 
 
+		}
+		
+		public void testJump() {
+			y+=35;
 		}
 
 		public int getX() {
