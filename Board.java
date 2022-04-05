@@ -1,6 +1,7 @@
 public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
+	
 	//Keeping track of pieces
 	//0 - empty, 1 - I piece, 2 - O piece, 3 - T piece, 4 - L piece, 5 - J piece, 6 - Z piece, 7 - S piece
 	//false - empty, true - not empty

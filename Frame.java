@@ -18,11 +18,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	Background b = new Background(175, 70);
 	Bird bird = new Bird(-50, 0);
-	Blocks blue = new Blocks(175, 70, "blue");
-	Blocks navy = new Blocks(100, 135, "navy");
-	Blocks purple = new Blocks(135, 100, "purple");
-	Blocks sky = new Blocks(135, 135, "sky");
-
+	Board best = new Board();
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
@@ -37,14 +33,20 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				c.paint(g);
 			}
 		}
+		
+		//test out creating the board using the Board class
+		for(int r = 0; r < best.board.length; r ++) {
+			for(int c = 0; c < best.board[r].length; c++) {
+				if(best.intBoard[r][c] == 1) {
+					Blocks temp = new Blocks((r*35)+175, (c*35)+70, "blue");
+					temp.paint(g);
+					tetris[r][c] = temp;
+				}
+			}
+		}
 		// ask the objects to paint themselves
 
-		bird.paint(g);
-
-		blue.paint(g);
-		navy.paint(g);
-		purple.paint(g);
-		sky.paint(g);
+		//bird.paint(g);
 
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
@@ -67,6 +69,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				tetris[r][c] = temp;
 			}
 		}
+		
+		best.spawn("O");
+		best.toString();
 
 		JFrame f = new JFrame("Tetris");
 		f.setSize(new Dimension(700, 900));
@@ -80,24 +85,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
-		blue.squareShape();
 	}
 
-	public void squareShape() {
-		Blocks[][] OShape = new Blocks[2][2];
-		OShape[0][0] = new Blocks(blue.getX() + 35, blue.getY(), "blue");
-		OShape[0][1] = navy;
-		OShape[1][0] = purple;
-		OShape[1][1] = sky;
-
-		for (int row = 0; row < OShape.length; row++) {
-			for (int col = 0; col < OShape[row].length; col++) {
-				if (OShape[row][col] != null) {
-
-				}
-			}
-		}
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -142,7 +131,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {
-			blue.testJump();
+			
 		}
 	}
 
