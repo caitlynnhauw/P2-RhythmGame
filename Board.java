@@ -145,7 +145,7 @@ public class Board {
 			int i = 0;
 			double rnd = Math.floor(Math.random()*(11-width));
 			
-			for(int r = 0; r < height; r++) {
+			for(int r = 0+2; r < height+2; r++) {
 				if(i == 0) {
 					for(int c = (int) rnd+2; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
@@ -164,7 +164,7 @@ public class Board {
 	}//end of spawn
 	
 	
-	public void rotate(int[][] temp, int r, int c) {
+	public void rotate(int r, int c) {
 		
 	}//end of rotate
 	
@@ -196,5 +196,5 @@ public class Board {
 		}
 		//*/
 		return "";
-	}
+	}// end of toString
 }
