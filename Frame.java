@@ -47,6 +47,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				}
 			}
 		}
+		best.update();
 		// ask the objects to paint themselves
 
 		//bird.paint(g);
