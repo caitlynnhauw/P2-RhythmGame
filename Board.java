@@ -178,8 +178,76 @@ public class Board {
 		}
 	}//end of update
 	
-	public void rotate(int r, int c) {
+	public int[] clockwiseTurn(int[] getter) {
+		int[] temp = new int[9];
 		
+		for(int i = 0; i < 9; i++) {
+			temp[i] = getter[i];
+			//System.out.print(getter[i]);
+		}
+		
+		
+		for(int i = 0; i < 9; i++) {
+			if(i == 0) {
+				getter[2] = temp[i];
+			}else if(i == 1) {
+				getter[5] = temp[i];
+			}else if(i == 2) {
+				getter[8] = temp[i];
+			}else if(i == 3) {
+				getter[1] = temp[i];
+			}else if(i == 4) {
+				getter[4] = temp[i];
+			}else if(i == 5){
+				getter[7] = temp[i];
+			}else if(i == 6) {
+				getter[0] = temp[i];
+			}else if(i == 7) {
+				getter[3] = temp[i];
+			}else if(i == 8) {
+				getter[6] = temp[i];
+			}
+		}
+		for(int i = 0; i < 9; i++){
+			//System.out.print(getter[i]);
+		}
+		
+		return getter;
+	}//end of clockwise rotate
+	
+	public void rotate(int row, int col) {
+		int[] getter = new int[9];
+		int[] setter;
+		int count = 0;
+		
+		for(int r = row-1; r < row+2; r++) {
+			for(int c = col-1; c < col+2; c++) {
+				getter[count] = intBoard[r][c];
+				count++;
+			}
+		}
+		
+		setter = clockwiseTurn(getter);
+		count = 0;
+		
+		for(int i = 0; i < 9; i++) {
+			getter[i] = setter[i];
+		}
+		
+		for(int i = 0; i < 9; i++) {
+			if(i%3 == 0) {
+				System.out.println("");
+			}
+			System.out.print(getter[i]);
+		}
+		
+		for(int r = row-1; r < row+2; r++) {
+			for(int c = col-1; c < col+2; c++) {
+				intBoard[r][c] = getter[count];
+				count++;
+			}
+		}
+		count = 0;
 	}//end of rotate
 	
 	public void testFall() {
