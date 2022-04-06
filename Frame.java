@@ -82,7 +82,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 
 
-		best.spawn("S");
+		best.spawn("L");
 		best.toString();
 
 		JFrame f = new JFrame("Tetris");
@@ -145,13 +145,20 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if (arg0.getKeyCode() == 40) {
 			best.testFall();
 		}
-		if (arg0.getKeyCode() == 79) {
+		if (arg0.getKeyCode() == 79) {//O
 			best.spawn("O");
 			color = "blue";
 		}
-		if (arg0.getKeyCode() == 83) {
+		if (arg0.getKeyCode() == 83) {//S
 			best.spawn("S");
 			color = "sky";
+		}
+		if(arg0.getKeyCode() == 76) {//L
+			best.spawn("L");
+			color = "blue";
+		}
+		if(arg0.getKeyCode() == 32) {//Spacebar
+			best.rotate(best.centerR, best.centerC); //Rotate only works for L piece btw (just for now)
 		}
 	}
 

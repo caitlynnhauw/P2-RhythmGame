@@ -2,6 +2,7 @@ public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
 	
+	public int centerR, centerC;
 	//Keeping track of pieces
 	//0 - empty, 1 - I piece, 2 - O piece, 3 - T piece, 4 - L piece, 5 - J piece, 6 - Z piece, 7 - S piece
 	//false - empty, true - not empty
@@ -146,6 +147,8 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
+			
 			double rnd = Math.floor(Math.random()*(11-width));
 			
 			for(int r = 0+2; r < height+2; r++) {
@@ -153,11 +156,17 @@ public class Board {
 					for(int c = (int) rnd+2; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -234,12 +243,14 @@ public class Board {
 			getter[i] = setter[i];
 		}
 		
+		/*
 		for(int i = 0; i < 9; i++) {
 			if(i%3 == 0) {
 				System.out.println("");
 			}
 			System.out.print(getter[i]);
 		}
+		*/
 		
 		for(int r = row-1; r < row+2; r++) {
 			for(int c = col-1; c < col+2; c++) {
@@ -273,6 +284,7 @@ public class Board {
 				
 			}
 		}
+		centerR--;
 		toString();
 	}
 	
