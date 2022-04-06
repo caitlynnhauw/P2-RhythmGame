@@ -189,6 +189,7 @@ public class Board {
 	
 	public int[] clockwiseTurn(int[] getter) {
 		int[] temp = new int[9];
+		boolean[] temps = new boolean[9];
 		
 		for(int i = 0; i < 9; i++) {
 			temp[i] = getter[i];
@@ -225,8 +226,8 @@ public class Board {
 	}//end of clockwise rotate
 	
 	public void rotate(int row, int col) {
-		int[] getter = new int[9];
-		int[] setter;
+		int[] getter = new int[9];		   
+		int[] setter;					   
 		int count = 0;
 		
 		for(int r = row-1; r < row+2; r++) {
@@ -268,9 +269,10 @@ public class Board {
 			for(int c = board[r].length-1; c >= 0;c --) {
 	
 				if(board[r][c] == true) {
-					if(intBoard[r+1][c] ==2) {
+					if(intBoard[r+1][c] == 2) {
 						setEmpty();
-						break;}
+						break;
+					}
 					board[r+1][c] = board[r][c];
 					intBoard[r+1][c] = 1;
 					board[r][c] = false;
@@ -281,10 +283,9 @@ public class Board {
 		for(int c = board[0].length-1; c >= 0;c --) {
 			if(board[board.length-1][c]) {
 				setEmpty();
-				
 			}
 		}
-		centerR--;
+		centerR++;
 		toString();
 	}
 	

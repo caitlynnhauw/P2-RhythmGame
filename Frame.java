@@ -142,7 +142,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
-		if (arg0.getKeyCode() == 40) {
+		if (arg0.getKeyCode() == 40) {//Down
 			best.testFall();
 		}
 		if (arg0.getKeyCode() == 79) {//O
