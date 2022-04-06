@@ -17,15 +17,15 @@ public class Blocks {
 		private int random;
 		Random rnd = new Random(1234);
 		Rectangle hitbox;
-		String type = null; //green, blue
-		public Blocks(int x, int y, String type) {
+		String color = null; //green, blue
+		public Blocks(int x, int y, String color) {
 				
 			height = 24;
 			width = 91;
 			this.x = x;
 			this.y = y;
-			this.type = type;
-			img = getImage("/ASSets/" + type + "_block.png"); //load the image for Tree
+			this.color = color;
+			img = getImage("/ASSets/" + color + "_block.png"); //load the image for Tree
 			tx = AffineTransform.getTranslateInstance(x, y );
 			init(x, y); 
 			//initialize the location of the image
@@ -56,18 +56,7 @@ public class Blocks {
 	
 			
 		}
-		public void squareShape() {
-			Blocks topLeft = new Blocks (x, y, type);
-			Blocks topRight = new Blocks(x+35, y, type);
-			Blocks bottomLeft = new Blocks(x, y+35, type);
-			Blocks bottomRight = new Blocks(x+35, y+35, type);
-			Blocks[][] OShape = new Blocks[2][2];
-			OShape[0][0] = topLeft; 
-			OShape[0][1] = topRight; 
-			OShape[1][0] = bottomLeft;
-			OShape[1][1] = bottomRight; 
-
-		}
+		
 		
 		public void testJump() {
 			y+=35;

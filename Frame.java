@@ -22,12 +22,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
-
+	String color = "blue";
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		// m.run();
 		// paint the board contents
-		b.paint(g);
+		//b.paint(g);
 		for (Blocks[] r : tetris) {
 			for (Blocks c : r) {
 				c.paint(g);
@@ -37,9 +37,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//test out creating the board using the Board class
 		for(int r = 0; r < best.board.length; r ++) {
 			for(int c = 0; c < best.board[r].length; c++) {
-				if(best.intBoard[r][c] == 1) {
-					Blocks temp = new Blocks((r*35)+175, (c*35)+70, "blue");
+				if(best.intBoard[r][c] >=1) {
+					Blocks temp = new Blocks((c*35)+175, (r*35)+70, color);
 					temp.paint(g);
+					tetris[r][c] = temp;
+				}else {
+					Blocks temp = new Blocks((c*35)+175, (r*35)+70, "navy");
 					tetris[r][c] = temp;
 				}
 			}
@@ -70,7 +73,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 		
-		best.spawn("O");
+		best.spawn("S");
 		best.toString();
 
 		JFrame f = new JFrame("Tetris");
@@ -131,7 +134,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {
-			
+			best.testFall();
+		}
+		if (arg0.getKeyCode() == 79) {
+			best.spawn("O");
+			color = "blue";
+		}
+		if (arg0.getKeyCode() == 83) {
+			best.spawn("S");
+			color = "sky";
 		}
 	}
 

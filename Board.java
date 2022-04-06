@@ -29,7 +29,9 @@ public class Board {
 		
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[0].length; c++) {
-				intBoard[r][c] = 0;
+				if(intBoard[r][c] == 1) {
+					intBoard[r][c] = 2;
+				}
 			}
 		}
 	}
@@ -168,6 +170,32 @@ public class Board {
 	public void rotate(int r, int c) {
 		
 	}//end of rotate
+	
+	public void testFall() {
+		
+		
+		for(int r = board.length-1; r >= 0; r--) {
+			for(int c = board[r].length-1; c >= 0;c --) {
+	
+				if(board[r][c] == true) {
+					if(intBoard[r+1][c] ==2) {
+						setEmpty();
+						break;}
+					board[r+1][c] = board[r][c];
+					intBoard[r+1][c] = 1;
+					board[r][c] = false;
+					intBoard[r][c] = 0;
+				}
+			}
+		}
+		for(int c = board[0].length-1; c >= 0;c --) {
+			if(board[board.length-1][c]) {
+				setEmpty();
+				
+			}
+		}
+		toString();
+	}
 	
 	public String toString() {
 		/*
