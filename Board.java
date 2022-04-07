@@ -176,20 +176,18 @@ public class Board {
 	}//end of spawn
 	 
 	public void update() {
-		
 		for(int r = board.length-1; r >= 0; r--) {
 			for(int c = board[r].length-1; c >= 0;c --) {
 				if(board[r][c] == true) {
-					if(intBoard[r+1][c] ==2)
+					if(intBoard[r+1][c] == 2)
 						setEmpty();
 				}
 			}
 		}
 	}//end of update
 	
-	public int[] clockwiseTurn(int[] getter) {
+	public int[] intClockwiseTurn(int[] getter) { //clockwise turn repositions each element in a 9x9 array, to another position (based off its current one)
 		int[] temp = new int[9];
-		boolean[] temps = new boolean[9];
 		
 		for(int i = 0; i < 9; i++) {
 			temp[i] = getter[i];
@@ -218,6 +216,45 @@ public class Board {
 				getter[6] = temp[i];
 			}
 		}
+		
+		for(int i = 0; i < 9; i++){
+			//System.out.print(getter[i]);
+		}
+		
+		return getter;
+	}
+	
+	public boolean[] boolClockwiseTurn(boolean[] getter) {
+		boolean[] temp = new boolean[9];
+		
+		for(int i = 0; i < 9; i++) {
+			temp[i] = getter[i];
+			//System.out.print(getter[i]);
+		}
+		
+		
+		for(int i = 0; i < 9; i++) {
+			if(i == 0) {
+				getter[2] = temp[i];
+			}else if(i == 1) {
+				getter[5] = temp[i];
+			}else if(i == 2) {
+				getter[8] = temp[i];
+			}else if(i == 3) {
+				getter[1] = temp[i];
+			}else if(i == 4) {
+				getter[4] = temp[i];
+			}else if(i == 5){
+				getter[7] = temp[i];
+			}else if(i == 6) {
+				getter[0] = temp[i];
+			}else if(i == 7) {
+				getter[3] = temp[i];
+			}else if(i == 8) {
+				getter[6] = temp[i];
+			}
+		}
+		
 		for(int i = 0; i < 9; i++){
 			//System.out.print(getter[i]);
 		}
@@ -226,39 +263,56 @@ public class Board {
 	}//end of clockwise rotate
 	
 	public void rotate(int row, int col) {
-		int[] getter = new int[9];		   
-		int[] setter;					   
+		int[] intGetter = new int[9];		   
+		int[] intSetter;
+		boolean[] boolGetter = new boolean[9];
+		boolean[] boolSetter;
+		boolean isSet = false;
 		int count = 0;
 		
 		for(int r = row-1; r < row+2; r++) {
 			for(int c = col-1; c < col+2; c++) {
-				getter[count] = intBoard[r][c];
+				intGetter[count] = intBoard[r][c];
+				boolGetter[count] = board[r][c];
 				count++;
 			}
 		}
-		
-		setter = clockwiseTurn(getter);
 		count = 0;
 		
 		for(int i = 0; i < 9; i++) {
-			getter[i] = setter[i];
+			if(intGetter[i] == 2) {
+				isSet = true;
+			}
 		}
 		
-		/*
-		for(int i = 0; i < 9; i++) {
-			if(i%3 == 0) {
+		if(isSet == false) {
+			intSetter = intClockwiseTurn(intGetter);
+			boolSetter = boolClockwiseTurn(boolGetter);
+		
+		
+			for(int i = 0; i < 9; i++) {
+				intGetter[i] = intSetter[i];
+				boolGetter[i] = boolSetter[i];
+			}
+		
+			/*
+			for(int i = 0; i < 9; i++) {
+				if(i%3 == 0) {
 				System.out.println("");
+				}
+				System.out.print(getter[i]);
 			}
-			System.out.print(getter[i]);
-		}
-		*/
+			*/
 		
-		for(int r = row-1; r < row+2; r++) {
-			for(int c = col-1; c < col+2; c++) {
-				intBoard[r][c] = getter[count];
-				count++;
+			for(int r = row-1; r < row+2; r++) {
+				for(int c = col-1; c < col+2; c++) {
+					intBoard[r][c] = intGetter[count];
+					board[r][c] = boolGetter[count];
+					count++;
+				}
 			}
 		}
+		
 		count = 0;
 	}//end of rotate
 	
@@ -266,7 +320,7 @@ public class Board {
 		
 		
 		for(int r = board.length-1; r >= 0; r--) {
-			for(int c = board[r].length-1; c >= 0;c --) {
+			for(int c = board[0].length-1; c >= 0;c --) {
 	
 				if(board[r][c] == true) {
 					if(intBoard[r+1][c] == 2) {
