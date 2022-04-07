@@ -66,6 +66,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		g.setColor(new Color(red, green, blue));
 
 		// g.fillRect(100, 100, 50, 50);
+		
+		for(int i = 0; i < 1000; i++) {
+			repaint();
+		}
 	}
 
 	public static void main(String[] arg) {
@@ -93,7 +97,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setLayout(new GridLayout(1, 2));
 		f.addMouseListener(this);
 		f.addKeyListener(this);
-		Timer t = new Timer(16, this);
+		Timer t = new Timer(1000, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -130,12 +134,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	}
 
-	Timer t = new Timer((int) 461.538461538, this);
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		repaint();
+		best.testFall();
 	}
 
 	@Override

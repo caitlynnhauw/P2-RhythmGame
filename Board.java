@@ -1,6 +1,8 @@
 public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
+	boolean testForNew = false;
+	boolean gameOver = false;
 	
 	public int centerR, centerC;
 	//Keeping track of pieces
@@ -35,6 +37,7 @@ public class Board {
 				}
 			}
 		}
+		spawnNewBlock();
 	}
 	
 	
@@ -185,6 +188,22 @@ public class Board {
 			}
 		}
 	}//end of update
+	
+	public void spawnNewBlock() {
+		//check if the remaining blocks have stopped moving
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[r].length; c++) {
+				if(intBoard[r][c] == 2 || intBoard[r][c] == 0) {
+					testForNew = true;
+				}else testForNew = false;
+			}
+		}
+		
+		if(testForNew) {
+			spawn("L");
+			testForNew = false;
+		}
+	}
 	
 	public int[] intClockwiseTurn(int[] getter) { //clockwise turn repositions each element in a 9x9 array, to another position (based off its current one)
 		int[] temp = new int[9];
