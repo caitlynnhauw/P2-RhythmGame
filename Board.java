@@ -1,6 +1,7 @@
 public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
+	String[][] colorBoard = new String[20][10];
 	boolean testForNew = false;
 	boolean gameOver = false;
 	String[] randomBlock = {"O", "S", "Z", "T", "L", "J"};
@@ -15,12 +16,8 @@ public class Board {
 		for(int r = 0; r < board.length; r++) {
 			for(int c = 0; c < board[0].length; c++) {
 				board[r][c] = false;
-			}
-		}
-		
-		for(int r = 0; r < intBoard.length; r++) {
-			for(int c = 0; c < intBoard[0].length; c++) {
 				intBoard[r][c] = 0;
+				colorBoard[r][c] = "blue";
 			}
 		}
 	}
@@ -55,6 +52,7 @@ public class Board {
 				for(int c = (int) rnd; c < width + (int) rnd; c++) {
 					intBoard[r][c] = 1;
 					board[r][c] = true;
+					colorBoard[r][c] = "blue";
 				}
 			}
 		}else if(shape.equals("I")) {
@@ -80,12 +78,14 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "sky";
 						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "sky";
 						if(count == 4) {
 							centerR = r;
 							centerC = c;
@@ -189,12 +189,14 @@ public class Board {
 					for(int c = (int) rnd+2; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "purple";
 						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "purple";
 						if(count == 3) {
 							centerR = r;
 							centerC = c;
@@ -352,8 +354,10 @@ public class Board {
 					}
 					board[r+1][c] = board[r][c];
 					intBoard[r+1][c] = 1;
+					colorBoard[r+1][c] = colorBoard[r][c];
 					board[r][c] = false;
 					intBoard[r][c] = 0;
+					colorBoard[r][c] = "blue";
 				}
 			}
 		}

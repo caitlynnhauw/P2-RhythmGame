@@ -45,7 +45,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		for(int r = 0; r < best.board.length; r ++) {
 			for(int c = 0; c < best.board[r].length; c++) {
 				if(best.intBoard[r][c] >=1) {
-					Blocks temp = new Blocks((c*35)+175, (r*35)+70, color);
+					Blocks temp = new Blocks((c*35)+175, (r*35)+70, best.colorBoard[r][c]);
 					temp.paint(g);
 					tetris[r][c] = temp;
 				}else {
