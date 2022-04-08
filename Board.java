@@ -3,6 +3,8 @@ public class Board {
 	int[][] intBoard = new int[20][10];
 	boolean testForNew = false;
 	boolean gameOver = false;
+	String[] randomBlock = {"O", "S", "Z", "T", "L", "J"};
+	
 	
 	public int centerR, centerC;
 	//Keeping track of pieces
@@ -70,6 +72,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -77,11 +80,17 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						if(count == 4) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -90,6 +99,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -97,11 +107,17 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						if(count == 3) {
+							centerR = r;
+							centerC  = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -110,6 +126,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -117,11 +134,17 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -130,6 +153,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -137,11 +161,17 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-2; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -154,7 +184,7 @@ public class Board {
 			
 			double rnd = Math.floor(Math.random()*(11-width));
 			
-			for(int r = 0+2; r < height+2; r++) {
+			for(int r = 0; r < height; r++) {
 				if(i == 0) {
 					for(int c = (int) rnd+2; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
@@ -189,6 +219,18 @@ public class Board {
 		}
 	}//end of update
 	
+	public void updateBoolArr() {
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(intBoard[r][c] == 1) {
+					board[r][c] = true;
+				}else {
+					board[r][c] = false;
+				}
+			}
+		}
+	}
+	
 	public void spawnNewBlock() {
 		//check if the remaining blocks have stopped moving
 		for(int r = 0; r < intBoard.length; r++) {
@@ -200,7 +242,8 @@ public class Board {
 		}
 		
 		if(testForNew) {
-			spawn("L");
+			double rnd = Math.floor(Math.random()*(randomBlock.length));
+			spawn(randomBlock[(int) rnd]);
 			testForNew = false;
 		}
 	}
@@ -241,58 +284,20 @@ public class Board {
 		}
 		
 		return getter;
-	}
-	
-	public boolean[] boolClockwiseTurn(boolean[] getter) {
-		boolean[] temp = new boolean[9];
-		
-		for(int i = 0; i < 9; i++) {
-			temp[i] = getter[i];
-			//System.out.print(getter[i]);
-		}
-		
-		
-		for(int i = 0; i < 9; i++) {
-			if(i == 0) {
-				getter[2] = temp[i];
-			}else if(i == 1) {
-				getter[5] = temp[i];
-			}else if(i == 2) {
-				getter[8] = temp[i];
-			}else if(i == 3) {
-				getter[1] = temp[i];
-			}else if(i == 4) {
-				getter[4] = temp[i];
-			}else if(i == 5){
-				getter[7] = temp[i];
-			}else if(i == 6) {
-				getter[0] = temp[i];
-			}else if(i == 7) {
-				getter[3] = temp[i];
-			}else if(i == 8) {
-				getter[6] = temp[i];
-			}
-		}
-		
-		for(int i = 0; i < 9; i++){
-			//System.out.print(getter[i]);
-		}
-		
-		return getter;
 	}//end of clockwise rotate
 	
 	public void rotate(int row, int col) {
 		int[] intGetter = new int[9];		   
 		int[] intSetter;
-		boolean[] boolGetter = new boolean[9];
-		boolean[] boolSetter;
+		//boolean[] boolGetter = new boolean[9];
+		//boolean[] boolSetter;
 		boolean isSet = false;
 		int count = 0;
 		
 		for(int r = row-1; r < row+2; r++) {
 			for(int c = col-1; c < col+2; c++) {
 				intGetter[count] = intBoard[r][c];
-				boolGetter[count] = board[r][c];
+				//boolGetter[count] = board[r][c];
 				count++;
 			}
 		}
@@ -306,12 +311,12 @@ public class Board {
 		
 		if(isSet == false) {
 			intSetter = intClockwiseTurn(intGetter);
-			boolSetter = boolClockwiseTurn(boolGetter);
+			//boolSetter = boolClockwiseTurn(boolGetter);
 		
 		
 			for(int i = 0; i < 9; i++) {
 				intGetter[i] = intSetter[i];
-				boolGetter[i] = boolSetter[i];
+				//boolGetter[i] = boolSetter[i];
 			}
 		
 			/*
@@ -326,7 +331,7 @@ public class Board {
 			for(int r = row-1; r < row+2; r++) {
 				for(int c = col-1; c < col+2; c++) {
 					intBoard[r][c] = intGetter[count];
-					board[r][c] = boolGetter[count];
+					//board[r][c] = boolGetter[count];
 					count++;
 				}
 			}
@@ -336,8 +341,7 @@ public class Board {
 	}//end of rotate
 	
 	public void testFall() {
-		
-		
+		updateBoolArr();
 		for(int r = board.length-1; r >= 0; r--) {
 			for(int c = board[0].length-1; c >= 0;c --) {
 	
@@ -356,10 +360,41 @@ public class Board {
 		for(int c = board[0].length-1; c >= 0;c --) {
 			if(board[board.length-1][c]) {
 				setEmpty();
+				centerR--;
 			}
 		}
 		centerR++;
 		toString();
+	}
+	
+	public void moveRight() { //has a couple bugs 
+		for(int r = intBoard.length-1; r > 0; r--) {
+			for(int c = intBoard[0].length-1; c > 0; c--) {
+				if(intBoard[r][c] == 1 && c != 9) {
+					centerC++;
+					if(intBoard[r][c+1] == 0) {
+						intBoard[r][c+1] = 1;
+						intBoard[r][c] = 0;
+					}
+				}
+			}
+		}
+		
+	}
+	
+	public void moveLeft() { //has a couple bugs
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && c != 0) {
+					centerC--;
+					if(intBoard[r][c-1] == 0) {
+						intBoard[r][c-1] = 1;
+						intBoard[r][c] = 0;
+					}
+				}
+			}
+		}
+		
 	}
 	
 	public String toString() {

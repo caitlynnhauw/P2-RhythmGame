@@ -162,7 +162,25 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			color = "blue";
 		}
 		if(arg0.getKeyCode() == 32) {//Spacebar
-			best.rotate(best.centerR, best.centerC); //Rotate only works for L piece btw (just for now)
+			best.rotate(best.centerR, best.centerC); //Rotate will work for all except I piece
+		}
+		if(arg0.getKeyCode() == 74) {//J
+			best.spawn("J");
+			color = "blue";
+		}
+		if(arg0.getKeyCode() == 84) {//T
+			best.spawn("T");
+			color = "blue";
+		}
+		if(arg0.getKeyCode() == 90) {//Z
+			best.spawn("Z");
+			color = "blue";
+		}
+		if(arg0.getKeyCode() == 39) {
+			best.moveRight();
+		}
+		if(arg0.getKeyCode() == 37) {
+			best.moveLeft();
 		}
 	}
 
