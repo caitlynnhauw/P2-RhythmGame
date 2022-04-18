@@ -16,7 +16,7 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-	Background b = new Background(175, 70);
+	Background b = new Background(0, 0);
 	Bird bird = new Bird(-50, 0);
 
 	Blocks blue = new Blocks(175, 70, "blue");
@@ -34,7 +34,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		super.paintComponent(g);
 		// m.run();
 		// paint the board contents
-		//b.paint(g);
+		b.paint(g);
 		for (Blocks[] r : tetris) {
 			for (Blocks c : r) {
 				c.paint(g);
@@ -48,6 +48,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					Blocks temp = new Blocks((c*35)+175, (r*35)+70, best.colorBoard[r][c]);
 					temp.paint(g);
 					tetris[r][c] = temp;
+					if(best.intBoard[r][c] == 1) {
+						best.colorBoard[r][c] = best.blockColor;
+					}
 				}else {
 					Blocks temp = new Blocks((c*35)+175, (r*35)+70, "navy");
 					tetris[r][c] = temp;
@@ -58,7 +61,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// ask the objects to paint themselves
 
 		bird.paint(g);
-
+	
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
 		int green = ((int) (Math.random() * 255));
@@ -138,9 +141,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		repaint();
 		best.testFall();
+		best.sec++; 
+		
+		if(best.isRowFilled == true) {
+			best.sec++;
+	
+		}
+		
+		if(best.sec == 2) {
+			best.clearLine();
+			best.sec = 0;
+			best.isRowFilled = false; 
+		}
+		
+		
+		repaint();
 	}
+
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {

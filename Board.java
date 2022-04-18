@@ -4,7 +4,10 @@ public class Board {
 	String[][] colorBoard = new String[20][10];
 	boolean testForNew = false;
 	boolean gameOver = false;
-	String[] randomBlock = {"O", "S", "Z", "T", "L", "J"};
+	int sec = 0;
+	boolean isRowFilled = false; 
+	String blockColor = "blue";
+	String[] randomBlock = {"O", "I", "S", "Z", "T", "L", "J"};
 	
 	
 	public int centerR, centerC;
@@ -53,6 +56,18 @@ public class Board {
 					intBoard[r][c] = 1;
 					board[r][c] = true;
 					colorBoard[r][c] = "blue";
+					blockColor = "blue";
+				}
+			}
+		}else if(shape.equals("test")) {
+			int width = 10;
+			int height = 2; 
+					
+			double rnd = Math.floor(Math.random()*(11-width));		
+			for(int r = 0; r < height; r++) {
+				for(int c = (int) rnd; c < width + (int) rnd; c++) {
+					intBoard[r][c] = 1;
+					board[r][c] = true;
 				}
 			}
 		}else if(shape.equals("I")) {
@@ -70,7 +85,6 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -79,18 +93,14 @@ public class Board {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
 						colorBoard[r][c] = "sky";
-						count++;
+						blockColor = "sky";
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
 						colorBoard[r][c] = "sky";
-						if(count == 4) {
-							centerR = r;
-							centerC = c;
-						}
-						count++;
+						blockColor = "sky";
 					}
 				}
 				i++;
@@ -99,7 +109,6 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -107,17 +116,15 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						count++;
+						colorBoard[r][c] = "violet";
+						blockColor = "violet";
 					}
 				}else {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						if(count == 3) {
-							centerR = r;
-							centerC  = c;
-						}
-						count++;
+						colorBoard[r][c] = "violet";
+						blockColor = "violet";
 					}
 				}
 				i++;
@@ -126,7 +133,6 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -134,17 +140,15 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						count++;
+						colorBoard[r][c] = "cyan";
+						blockColor = "cyan";
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						if(count == 3) {
-							centerR = r;
-							centerC = c;
-						}
-						count++;
+						colorBoard[r][c] = "cyan";
+						blockColor = "cyan";
 					}
 				}
 				i++;
@@ -153,7 +157,6 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -161,17 +164,11 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-2; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						if(count == 3) {
-							centerR = r;
-							centerC = c;
-						}
-						count++;
 					}
 				}
 				i++;
@@ -184,12 +181,13 @@ public class Board {
 			
 			double rnd = Math.floor(Math.random()*(11-width));
 			
-			for(int r = 0; r < height; r++) {
+			for(int r = 0+2; r < height+2; r++) {
 				if(i == 0) {
 					for(int c = (int) rnd+2; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
 						colorBoard[r][c] = "purple";
+						blockColor = "purple";
 						count++;
 					}
 				}else {
@@ -197,6 +195,7 @@ public class Board {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
 						colorBoard[r][c] = "purple";
+						blockColor = "purple";
 						if(count == 3) {
 							centerR = r;
 							centerC = c;
@@ -209,6 +208,7 @@ public class Board {
 		}
 		
 	}//end of spawn
+
 	 
 	public void update() {
 		for(int r = board.length-1; r >= 0; r--) {
@@ -371,35 +371,94 @@ public class Board {
 		toString();
 	}
 	
+	public void clearLine() {
+		int r = board.length - 1;
+		int count = 0;
+		for(int c = 0; c < board[r].length; c++) {
+			if(intBoard[r][c] == 2) {
+				count++;
+			}
+		}
+		
+		if(count == board[r].length) {
+			testFall();
+			isRowFilled = true; 
+			
+			for(int row = board.length - 1; row > 0; row--) {
+				for(int c = 0; c < board[row].length; c++) {
+					if(intBoard[row][c] != 0) {
+						board[row][c] = board[row - 1][c];
+						intBoard[row][c] = intBoard[row - 1][c];
+					}
+				}
+			}
+		}
+	} //end of clear line method
+
+
+	
 	public void moveRight() { //has a couple bugs 
-		for(int r = intBoard.length-1; r > 0; r--) {
-			for(int c = intBoard[0].length-1; c > 0; c--) {
-				if(intBoard[r][c] == 1 && c != 9) {
-					centerC++;
-					if(intBoard[r][c+1] == 0) {
+		boolean isEdge = false;
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(c == intBoard[0].length - 1 && intBoard[r][c] == 1) {
+					isEdge = true;
+					//System.out.print(isEdge);
+				}else if(c != 9) {
+					if(intBoard[r][c+1] == 2 && intBoard[r][c] == 1) {
+						isEdge = true;
+					}
+				}
+			}
+		}
+		
+		if(isEdge == false) {
+			for(int r = intBoard.length-1; r > -1; r--) {
+				for(int c = intBoard[0].length-1; c > -1; c--) {
+					if(intBoard[r][c] == 1) {
 						intBoard[r][c+1] = 1;
 						intBoard[r][c] = 0;
 					}
+					
 				}
 			}
+			centerC++;
+			//System.out.println("Current centerC: " + centerC);
 		}
-		
-	}
+
+	}//end of moveright
 	
 	public void moveLeft() { //has a couple bugs
+		boolean isEdge = false;
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[0].length; c++) {
-				if(intBoard[r][c] == 1 && c != 0) {
-					centerC--;
-					if(intBoard[r][c-1] == 0) {
-						intBoard[r][c-1] = 1;
-						intBoard[r][c] = 0;
+				if(c == 0 && intBoard[r][c] == 1) {
+					isEdge = true;
+					//System.out.print(isEdge);
+				}else if(c != 0) {
+					if(intBoard[r][c-1] == 2 && intBoard[r][c] == 1) {
+						isEdge = true;
 					}
 				}
 			}
 		}
 		
-	}
+		if(isEdge == false) {
+			for(int r = 0; r < intBoard.length; r++) {
+				for(int c = 0; c < intBoard[0].length; c++) {
+					if(intBoard[r][c] == 1) {
+						intBoard[r][c-1] = 1;
+						intBoard[r][c] = 0;
+					}
+					
+				}
+			}
+			centerC--;
+			//System.out.println("Current centerC: " + centerC);
+		}
+		
+	}//end of moveleft
+
 	
 	public String toString() {
 		/*
