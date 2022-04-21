@@ -60,7 +60,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		best.update();
 		// ask the objects to paint themselves
 
-		bird.paint(g);
+		//bird.paint(g);
 	
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));

@@ -79,6 +79,9 @@ public class Board {
 				for(int c = (int) rnd; c < width + (int) rnd; c++) {
 					intBoard[r][c] = 1;
 					board[r][c] = true;
+					colorBoard[r][c] = "violet";
+					blockColor = "violet";
+
 				}
 			}
 		}else if(shape.equals("S")) {
@@ -116,15 +119,15 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "violet";
-						blockColor = "violet";
+						colorBoard[r][c] = "vibrantblue";
+						blockColor = "vibrantblue";
 					}
 				}else {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "violet";
-						blockColor = "violet";
+						colorBoard[r][c] = "vibrantblue";
+						blockColor = "vibrantblue";
 					}
 				}
 				i++;
@@ -140,15 +143,15 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "cyan";
-						blockColor = "cyan";
+						colorBoard[r][c] = "green";
+						blockColor = "green";
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "cyan";
-						blockColor = "cyan";
+						colorBoard[r][c] = "green";
+						blockColor = "green";
 					}
 				}
 				i++;
@@ -164,11 +167,15 @@ public class Board {
 					for(int c = (int) rnd; c < width + (int) rnd-2; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "teal";
+						blockColor = "teal";
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
+						colorBoard[r][c] = "teal";
+						blockColor = "teal";
 					}
 				}
 				i++;
