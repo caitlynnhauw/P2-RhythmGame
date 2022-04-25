@@ -89,7 +89,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			
+			int count = 1;
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
 				if(i == 0) {
@@ -98,6 +98,7 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "sky";
 						blockColor = "sky";
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd-1; c++) {
@@ -105,6 +106,11 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "sky";
 						blockColor = "sky";
+						if(count == 4) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -113,6 +119,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -122,6 +129,7 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "vibrantblue";
 						blockColor = "vibrantblue";
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd+1; c < width + (int) rnd; c++) {
@@ -129,6 +137,11 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "vibrantblue";
 						blockColor = "vibrantblue";
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -137,22 +150,28 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
-			
+			int count = 1;
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
 				if(i == 0) {
 					for(int c = (int) rnd+1; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "navy";
-						blockColor = "navy";
+						colorBoard[r][c] = "purple";
+						blockColor = "purple";
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "navy";
-						blockColor = "navy";
+						colorBoard[r][c] = "purple";
+						blockColor = "purple";
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
@@ -161,6 +180,7 @@ public class Board {
 			int width = 3;
 			int height = 2;
 			int i = 0;
+			int count = 1;
 			
 			double rnd = Math.floor(Math.random()*(11-width));		
 			for(int r = 0; r < height; r++) {
@@ -170,6 +190,7 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "teal";
 						blockColor = "teal";
+						count++;
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
@@ -177,6 +198,11 @@ public class Board {
 						board[r][c] = true;
 						colorBoard[r][c] = "teal";
 						blockColor = "teal";
+						if(count == 3) {
+							centerR = r;
+							centerC = c;
+						}
+						count++;
 					}
 				}
 				i++;
