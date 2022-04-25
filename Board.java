@@ -4,9 +4,10 @@ public class Board {
 	String[][] colorBoard = new String[20][10];
 	boolean testForNew = false;
 	boolean gameOver = false;
+	int topRowFilled = 0;
 	int sec = 0;
 	boolean isRowFilled = false; 
-	String blockColor = "blue";
+	String blockColor = "navy";
 	String[] randomBlock = {"O", "I", "S", "Z", "T", "L", "J"};
 	
 	
@@ -20,7 +21,7 @@ public class Board {
 			for(int c = 0; c < board[0].length; c++) {
 				board[r][c] = false;
 				intBoard[r][c] = 0;
-				colorBoard[r][c] = "blue";
+				colorBoard[r][c] = "navy";
 			}
 		}
 	}
@@ -143,15 +144,15 @@ public class Board {
 					for(int c = (int) rnd+1; c < width + (int) rnd-1; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "green";
-						blockColor = "green";
+						colorBoard[r][c] = "navy";
+						blockColor = "navy";
 					}
 				}else {
 					for(int c = (int) rnd; c < width + (int) rnd; c++) {
 						intBoard[r][c] = 1;
 						board[r][c] = true;
-						colorBoard[r][c] = "green";
-						blockColor = "green";
+						colorBoard[r][c] = "navy";
+						blockColor = "navy";
 					}
 				}
 				i++;
@@ -226,6 +227,16 @@ public class Board {
 				}
 			}
 		}
+		
+		//test for gameOver
+				for(int c = 0; c < board[0].length; c++) {
+					if(intBoard[1][c] == 2) {topRowFilled++;
+					}
+				}
+				if(topRowFilled > 5) {
+					gameOver = true;
+					System.out.println("Game Over");
+				}
 	}//end of update
 	
 	public void updateBoolArr() {
@@ -238,6 +249,7 @@ public class Board {
 				}
 			}
 		}
+		
 	}
 	
 	public void spawnNewBlock() {
@@ -250,7 +262,7 @@ public class Board {
 			}
 		}
 		
-		if(testForNew) {
+		if(testForNew && gameOver == false) {
 			double rnd = Math.floor(Math.random()*(randomBlock.length));
 			spawn(randomBlock[(int) rnd]);
 			testForNew = false;
@@ -364,7 +376,7 @@ public class Board {
 					colorBoard[r+1][c] = colorBoard[r][c];
 					board[r][c] = false;
 					intBoard[r][c] = 0;
-					colorBoard[r][c] = "blue";
+					colorBoard[r][c] = blockColor;
 				}
 			}
 		}
@@ -379,28 +391,32 @@ public class Board {
 	}
 	
 	public void clearLine() {
-		int r = board.length - 1;
-		int count = 0;
-		for(int c = 0; c < board[r].length; c++) {
-			if(intBoard[r][c] == 2) {
-				count++;
+		for (int r = board.length - 1; r > 0; r--) {
+			int count = 0;
+			for (int c = 0; c < board[r].length; c++) {
+				if (intBoard[r][c] == 2) {
+					count++;
+				}
 			}
-		}
-		
-		if(count == board[r].length) {
-			testFall();
-			isRowFilled = true; 
-			
-			for(int row = board.length - 1; row > 0; row--) {
-				for(int c = 0; c < board[row].length; c++) {
-					if(intBoard[row][c] != 0) {
-						board[row][c] = board[row - 1][c];
-						intBoard[row][c] = intBoard[row - 1][c];
+
+			if (count == board[0].length) {
+				testFall();
+				isRowFilled = true;
+
+				for (int row = r; row > 0; row--) {
+					for (int c = 0; c < board[0].length; c++) {
+						if (intBoard[row][c] == 2) {
+							board[row][c] = board[row - 1][c];
+							intBoard[row][c] = intBoard[row - 1][c];
+						}
 					}
 				}
 			}
 		}
-	} //end of clear line method
+	} // end of clear line method
+
+ // end of clear line method
+
 
 
 	

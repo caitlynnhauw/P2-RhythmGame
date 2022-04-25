@@ -16,7 +16,7 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-	Background b = new Background(0, 0);
+	Background b = new Background(-120, 0);
 	Bird bird = new Bird(-50, 0);
 
 	Blocks blue = new Blocks(175, 70, "blue");
@@ -29,7 +29,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
-	String color = "blue";
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		// m.run();
@@ -52,7 +51,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 						best.colorBoard[r][c] = best.blockColor;
 					}
 				}else {
-					Blocks temp = new Blocks((c*35)+175, (r*35)+70, "navy");
+					Blocks temp = new Blocks((c*35)+175, (r*35)+70, "darkteal");
 					tetris[r][c] = temp;
 				}
 			}
@@ -60,7 +59,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		best.update();
 		// ask the objects to paint themselves
 
-		//bird.paint(g);
+		bird.paint(g);
 	
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
@@ -93,7 +92,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		best.toString();
 
 		JFrame f = new JFrame("Tetris");
-		f.setSize(new Dimension(700, 900));
+		f.setSize(new Dimension(900, 900));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -141,18 +140,20 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		best.testFall();
+		if(best.gameOver == false) {
+	    best.testFall();
 		best.sec++; 
-		
+		}
 		if(best.isRowFilled == true) {
 			best.sec++;
-	
 		}
 		
 		if(best.sec == 2) {
 			best.clearLine();
 			best.sec = 0;
 			best.isRowFilled = false; 
+			best.testFall();
+			System.out.println("Helloooooooooo");
 		}
 		
 		
@@ -169,30 +170,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if (arg0.getKeyCode() == 79) {//O
 			best.spawn("O");
-			color = "blue";
 		}
 		if (arg0.getKeyCode() == 83) {//S
 			best.spawn("S");
-			color = "sky";
 		}
 		if(arg0.getKeyCode() == 76) {//L
 			best.spawn("L");
-			color = "blue";
 		}
 		if(arg0.getKeyCode() == 32) {//Spacebar
 			best.rotate(best.centerR, best.centerC); //Rotate will work for all except I piece
 		}
 		if(arg0.getKeyCode() == 74) {//J
 			best.spawn("J");
-			color = "blue";
 		}
 		if(arg0.getKeyCode() == 84) {//T
 			best.spawn("T");
-			color = "blue";
 		}
 		if(arg0.getKeyCode() == 90) {//Z
 			best.spawn("Z");
-			color = "blue";
 		}
 		if(arg0.getKeyCode() == 39) {
 			best.moveRight();
