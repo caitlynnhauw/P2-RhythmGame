@@ -142,18 +142,23 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		if(best.gameOver == false) {
 	    best.testFall();
-		best.sec++; 
+
+	    //best.sec++;
 		}
 		if(best.isRowFilled == true) {
 			best.sec++;
 		}
 		
-		if(best.sec == 2) {
-			best.clearLine();
+		if(best.sec == 1) {
 			best.sec = 0;
-			best.isRowFilled = false; 
+			best.isRowFilled = false;
+			best.fallSec ++;
 			best.testFall();
 			System.out.println("Helloooooooooo");
+		}
+		if(best.fallSec == 2) {
+			System.out.println("This is really working");
+			best.fallSec = 0;
 		}
 		
 		
