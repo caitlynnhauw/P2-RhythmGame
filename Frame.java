@@ -22,7 +22,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Blocks blue = new Blocks(175, 70, "blue");
 	Blocks navy = new Blocks(100, 135, "navy");
 	Blocks purple = new Blocks(135, 100, "purple");
-	Blocks btest = new Blocks(0, 0, "sky");
+	Blocks btest = new Blocks(0, 0, "sky");//
  
  
 	Board best = new Board();
