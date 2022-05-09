@@ -412,34 +412,32 @@ public class Board {
 		toString();
 	}
 
-	public boolean isRowFilled() {
-		boolean result = false;
-		for (int r = board.length - 1; r > 0; r--) {
-			int count = 0;
-			for (int c = 0; c < board[r].length; c++) {
-				if (intBoard[r][c] == 2) {
-					count++;
-					clearRowIndex = r;
-				}
+	public boolean isRowFilled(int[] row) {
+		for(int i = 0; i < row.length; i++) {
+			if(row[i] != 2) {
+				return false;
 			}
-			if (count == board[0].length)
-				result = true;
 		}
-		return result;
+		
+		return true;
 	}
-
+	
+	
 	public void clearLine() {
-		if(isRowFilled) {
-		for (int c = 0; c < board[0].length; c++) {
-			if (intBoard[clearRowIndex][c] == 2) {
-				board[clearRowIndex][c] = false;
-				intBoard[clearRowIndex][c] = 0;
+		for (int r = board.length - 1; r >= 0; r--) {
+			if(isRowFilled(intBoard[r])) {
+				System.out.println("Hello");
+				for(int c = board[0].length-1; c >= 0; c--) {
+				board[r][c] = false;
+				intBoard[r][c] = 0;
+				colorBoard[r][c] = "darkteal";
+				}
+				
 			}
-		}}
-		clearRowIndex = 0;
+		}
+		updateBoolArr();
 	} // end of clear line method
 
-	// end of clear line method
 
 	public void moveRight() { // has a couple bugs
 		boolean isEdge = false;
