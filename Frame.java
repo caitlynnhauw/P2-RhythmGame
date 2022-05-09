@@ -8,23 +8,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+ 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+ 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
-
+ 
 	Background b = new Background(-120, 0);
 	Bird bird = new Bird(-50, 0);
-
+ 
 	Blocks blue = new Blocks(175, 70, "blue");
 	Blocks navy = new Blocks(100, 135, "navy");
 	Blocks purple = new Blocks(135, 100, "purple");
-	Blocks sky = new Blocks(135, 135, "sky");
-
-
+	Blocks btest = new Blocks(0, 0, "sky");
+ 
+ 
 	Board best = new Board();
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
@@ -58,39 +58,39 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		best.update();
 		// ask the objects to paint themselves
-
+ 
 		bird.paint(g);
-	
+		btest.paint(g);
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
 		int green = ((int) (Math.random() * 255));
 		int blue = ((int) (Math.random() * 255));
 		g.setColor(new Color(red, green, blue));
-
+ 
 		// g.fillRect(100, 100, 50, 50);
 		
 		for(int i = 0; i < 1000; i++) {
 			repaint();
 		}
 	}
-
+ 
 	public static void main(String[] arg) {
 		Frame f = new Frame();
 	}
-
+ 
 	public Frame() {
-
+		 
 		for (int r = 0; r < tetris.length; r++) {
 			for (int c = 0; c < tetris[r].length; c++) {
 				Blocks temp = new Blocks((c * 35) + 175, (r * 35) + 70, "navy");
 				tetris[r][c] = temp;
 			}
 		}
-
-
-		best.spawn("L");
-		best.toString();
-
+ 
+ 
+		best.spawn("test");
+		//best.toString();
+ 
 		JFrame f = new JFrame("Tetris");
 		f.setSize(new Dimension(900, 900));
 		f.setBackground(Color.blue);
@@ -101,71 +101,63 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.addKeyListener(this);
 		Timer t = new Timer(1000, this);
 		t.start();
+		Timer t2 = new Timer(1, actions);
+		t2.start();
+		//t2.setRepeats(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 	}
-
-
+ 
+ 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
-
+ 
+ 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if(best.gameOver == false) {
 	    best.testFall();
-
-	    //best.sec++;
 		}
-		if(best.isRowFilled == true) {
-			best.sec++;
-		}
-		
-		if(best.sec == 1) {
-			best.sec = 0;
-			best.isRowFilled = false;
-			best.fallSec ++;
-			best.testFall();
-			System.out.println("Helloooooooooo");
-		}
-		if(best.fallSec == 2) {
-			System.out.println("This is really working");
-			best.fallSec = 0;
-		}
-		
-		
-		repaint();
 	}
-
-
+	
+	ActionListener actions = new ActionListener() {
+ 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			best.clearLine();
+			repaint();
+		}
+		
+	};
+ 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
@@ -201,17 +193,17 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.moveLeft();
 		}
 	}
-
+ 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
+ 
 	}
-
+ 
 }
