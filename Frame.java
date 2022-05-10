@@ -22,13 +22,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Blocks blue = new Blocks(175, 70, "blue");
 	Blocks navy = new Blocks(100, 135, "navy");
 	Blocks purple = new Blocks(135, 100, "purple");
-	Blocks btest = new Blocks(0, 0, "sky");//
- 
+	Blocks btest = new Blocks(0, 0, "sky");
+	
  
 	Board best = new Board();
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
+	Blocks[][] nextBlocks = new Blocks[17][6];
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		// m.run();
@@ -39,6 +40,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				c.paint(g);
 			}
 		}
+		
 		
 		//test out creating the board using the Board class
 		for(int r = 0; r < best.board.length; r ++) {
@@ -56,6 +58,20 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				}
 			}
 		}
+		
+		for(int r = 0; r < nextBlocks.length; r++) {
+			for(int c = 0; c < nextBlocks[r].length; c++) {
+				if(best.blockQueue[r][c] >=1) {
+					Blocks temp = new Blocks(700, (r*35)+70, "navy");
+					temp.paint(g);
+					nextBlocks[r][c] = temp;
+				}else {
+					Blocks temp = new Blocks(700, (r*35)+70, "darkteal");
+					nextBlocks[r][c] = temp;
+				}
+			}
+		}
+		
 		best.update();
 		// ask the objects to paint themselves
  
@@ -86,8 +102,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				tetris[r][c] = temp;
 			}
 		}
- 
- 
+		best.queue.add("S");
+		best.queue.add("L");
+		best.queue.add("T");
+		best.queue.add("O");
 		best.spawn("test");
 		//best.toString();
  
@@ -161,7 +179,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println(arg0.getKeyCode());
+		//System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {//Down
 			best.testFall();
 		}

@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
 	String[][] colorBoard = new String[20][10];
+	int[][] blockQueue = new int[17][6];
 	boolean testForNew = false;
 	boolean gameOver = false;
 	int topRowFilled = 0;
@@ -11,7 +14,8 @@ public class Board {
 	boolean isRowFilled = false;
 	String blockColor = "navy";
 	String[] randomBlock = { "O", "I", "S", "Z", "T", "L", "J" };
-
+	ArrayList<String> queue = new ArrayList<String>();
+	
 	public int centerR, centerC;
 	// Keeping track of pieces
 	// 0 - empty, 1 - I piece, 2 - O piece, 3 - T piece, 4 - L piece, 5 - J piece, 6
@@ -24,6 +28,7 @@ public class Board {
 				board[r][c] = false;
 				intBoard[r][c] = 0;
 				colorBoard[r][c] = "navy";
+				
 			}
 		}
 	}
@@ -263,6 +268,8 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
+		
+		nextMoves();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -291,8 +298,12 @@ public class Board {
 
 		if (testForNew && gameOver == false) {
 			double rnd = Math.floor(Math.random() * (randomBlock.length));
-			spawn(randomBlock[(int) rnd]);
+			//spawn(randomBlock[(int) rnd]);
+			queue.remove(0);
+			queue.add(randomBlock[(int) rnd]);
+			spawn(queue.get(0));
 			testForNew = false;
+			tmpToString();
 		}
 	}
 
@@ -409,7 +420,7 @@ public class Board {
 			}
 		}
 		centerR++;
-		toString();
+		//toString();
 	}
 
 	public boolean isRowFilled(int[] row) {
@@ -430,7 +441,7 @@ public class Board {
 				for(int c = board[0].length-1; c >= 0; c--) {
 				board[r][c] = false;
 				intBoard[r][c] = 0;
-				colorBoard[r][c] = "darkteal";
+				//colorBoard[r][c] = "darkteal";
 				}
 				
 			}
@@ -524,4 +535,14 @@ public class Board {
 		// */
 		return "";
 	}// end of toString
+	
+	public void tmpToString() {
+		System.out.println(queue);
+	}
+	
+	public void nextMoves() {
+		for(int e = 0; e < queue.size(); e++) {
+			
+		}
+	}
 }
