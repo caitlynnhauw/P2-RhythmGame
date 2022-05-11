@@ -54,23 +54,34 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					}
 				}else {
 					Blocks temp = new Blocks((c*35)+175, (r*35)+70, "darkteal");
+					
 					tetris[r][c] = temp;
 				}
 			}
 		}
 		
-		for(int r = 0; r < nextBlocks.length; r++) {
-			for(int c = 0; c < nextBlocks[r].length; c++) {
-				if(best.blockQueue[r][c] >=1) {
-					Blocks temp = new Blocks(700, (r*35)+70, "navy");
-					temp.paint(g);
-					nextBlocks[r][c] = temp;
-				}else {
-					Blocks temp = new Blocks(700, (r*35)+70, "darkteal");
-					nextBlocks[r][c] = temp;
-				}
+		for(int r = 0; r < 17; r++) {
+			for(int c = 0; c < 6; c++) {
+					nextBlocks[r][c].paint(g);
 			}
 		}
+		for(int i = 1; i < best.queue.size(); i++) {
+			
+			if(best.queue.get(i).equals("O")) {
+				nextBlocks[i*4][2].changeColor("blue");
+				nextBlocks[i*4][3].changeColor("blue");
+				nextBlocks[i*4-1][2].changeColor("blue");
+				nextBlocks[i*4-1][3].changeColor("blue");
+			}
+			if(best.queue.get(i).equals("L")) {
+				nextBlocks[i*4-1][4].changeColor("purple");
+				nextBlocks[i*4][3].changeColor("purple");
+				nextBlocks[i*4][4].changeColor("purple");
+				nextBlocks[i*4][2].changeColor("purple");
+				nextBlocks[i*4-1][3].changeColor("darkteal");
+			}
+		}
+		
 		
 		best.update();
 		// ask the objects to paint themselves
@@ -100,6 +111,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			for (int c = 0; c < tetris[r].length; c++) {
 				Blocks temp = new Blocks((c * 35) + 175, (r * 35) + 70, "navy");
 				tetris[r][c] = temp;
+			}
+		}
+		for(int r = 0; r < 17; r++) {
+			for(int c = 0; c < 6; c++) {
+					Blocks temp = new Blocks(c*35+600, (r*35)+100, "darkteal");
+					nextBlocks[r][c] = temp;
 			}
 		}
 		best.queue.add("S");

@@ -57,6 +57,10 @@ public class Blocks {
 			
 		}
 		
+		public void changeColor(String color) {
+			img = getImage("/ASSets/" + color + "_block.png");
+		}
+		
 		
 		public void testJump() {
 			y+=35;
