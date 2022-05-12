@@ -65,6 +65,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					nextBlocks[r][c].paint(g);
 			}
 		}
+		for(int r = 0; r < nextBlocks.length; r++) {
+			for(int c = 0; c < nextBlocks[r].length; c++) {
+				nextBlocks[r][c].changeColor("darkteal");
+			}
+		}
 		for(int i = 1; i < best.queue.size(); i++) {
 			
 			if(best.queue.get(i).equals("O")) {
@@ -78,7 +83,36 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				nextBlocks[i*4][3].changeColor("purple");
 				nextBlocks[i*4][4].changeColor("purple");
 				nextBlocks[i*4][2].changeColor("purple");
-				nextBlocks[i*4-1][3].changeColor("darkteal");
+			}
+			if(best.queue.get(i).equals("J")) {
+				nextBlocks[i*4-1][2].changeColor("teal");
+				nextBlocks[i*4][3].changeColor("teal");
+				nextBlocks[i*4][4].changeColor("teal");
+				nextBlocks[i*4][2].changeColor("teal");
+			}
+			if(best.queue.get(i).equals("T")) {
+				nextBlocks[i*4-1][3].changeColor("navy");
+				nextBlocks[i*4][3].changeColor("navy");
+				nextBlocks[i*4][4].changeColor("navy");
+				nextBlocks[i*4][2].changeColor("navy");
+			}
+			if(best.queue.get(i).equals("S")) {
+				nextBlocks[i*4-1][4].changeColor("sky");
+				nextBlocks[i*4-1][3].changeColor("sky");
+				nextBlocks[i*4][3].changeColor("sky");
+				nextBlocks[i*4][2].changeColor("sky");
+			}
+			if(best.queue.get(i).equals("Z")) {
+				nextBlocks[i*4-1][2].changeColor("vibrantblue");
+				nextBlocks[i*4-1][3].changeColor("vibrantblue");
+				nextBlocks[i*4][3].changeColor("vibrantblue");
+				nextBlocks[i*4][4].changeColor("vibrantblue");
+			}
+			if(best.queue.get(i).equals("I")) {
+				nextBlocks[i*4-2][3].changeColor("violet");
+				nextBlocks[i*4-1][3].changeColor("violet");
+				nextBlocks[i*4][3].changeColor("violet");
+				nextBlocks[i*4+1][3].changeColor("violet");
 			}
 		}
 		

@@ -12,6 +12,7 @@ public class Board {
 	int fallSec = 0;
 	int clearRowIndex = 0;
 	boolean isRowFilled = false;
+	boolean lineClearing = false;
 	String blockColor = "navy";
 	String[] randomBlock = { "O", "I", "S", "Z", "T", "L", "J" };
 	ArrayList<String> queue = new ArrayList<String>();
@@ -436,18 +437,39 @@ public class Board {
 	
 	public void clearLine() {
 		for (int r = board.length - 1; r >= 0; r--) {
-			if(isRowFilled(intBoard[r])) {
+			if (isRowFilled(intBoard[r])) {
 				System.out.println("Hello");
-				for(int c = board[0].length-1; c >= 0; c--) {
-				board[r][c] = false;
-				intBoard[r][c] = 0;
-				//colorBoard[r][c] = "darkteal";
+				for (int c = board[0].length - 1; c >= 0; c--) {
+					board[r][c] = false;
+					intBoard[r][c] = 0;
 				}
 				
+				pushBlocksDown(r, board);
+			
 			}
 		}
-		updateBoolArr();
+		lineClearing = true;
+
+		/*
+		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
+		 * < board[r].length; c++) { if (intBoard[r][c] == 2) { count++; } }
+		 */
+
 	} // end of clear line method
+
+	public void pushBlocksDown(int r, boolean[][] array) {
+		for (int row = r; row > 0; row--) {
+			for (int c = 0; c < array[0].length; c++) {
+				if (intBoard[r - 1][c] == 1 || intBoard[r][c] == 1 ) {
+					break;
+				} else {
+					board[row][c] = board[row - 1][c];
+					intBoard[row][c] = intBoard[row - 1][c];
+				}
+			}
+		}
+	}
+
 
 
 	public void moveRight() { // has a couple bugs
