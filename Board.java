@@ -465,6 +465,7 @@ public class Board {
 				} else {
 					board[row][c] = board[row - 1][c];
 					intBoard[row][c] = intBoard[row - 1][c];
+					colorBoard[row][c] = colorBoard[row-1][c];
 				}
 			}
 		}

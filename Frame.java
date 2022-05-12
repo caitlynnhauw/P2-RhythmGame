@@ -223,6 +223,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		public void actionPerformed(ActionEvent e) {
 			best.clearLine();
 			repaint();
+			
+			if(best.lineClearing) {
+				
+			}
 		}
 		
 	};
