@@ -397,6 +397,7 @@ public class Board {
 
 	public void testFall() {
 		updateBoolArr();
+		updateColors();
 		for (int r = board.length - 1; r >= 0; r--) {
 			for (int c = board[0].length - 1; c >= 0; c--) {
 
@@ -448,7 +449,6 @@ public class Board {
 			
 			}
 		}
-		lineClearing = true;
 
 		/*
 		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
@@ -469,12 +469,46 @@ public class Board {
 				}
 			}
 		}
+		
+	}
+	public void updateColors() {
+		for(int r = 0; r < colorBoard.length; r++) {
+			for(int c = 0; c < colorBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && r != 19) {
+					colorBoard[r+1][c] = blockColor;
+				}
+			}
+		}
+	}
+	
+	public void updateColorsRight() {
+		for(int r = 0; r < colorBoard.length; r++) {
+			for(int c = 0; c < colorBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && c != 9) {
+					if(intBoard[r][c+1] != 2) {
+						colorBoard[r][c+1] = blockColor;
+					}
+				}
+			}
+		}
+	}
+	public void updateColorsLeft() {
+		for(int r = 0; r < colorBoard.length; r++) {
+			for(int c = 0; c < colorBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && c != 0) {
+					if(intBoard[r][c-1] != 2) {
+						colorBoard[r][c-1] = blockColor;
+					}
+				}
+			}
+		}
 	}
 
 
 
 
 	public void moveRight() { // has a couple bugs
+		updateColorsRight();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -506,6 +540,7 @@ public class Board {
 	}// end of moveright
 
 	public void moveLeft() { // has a couple bugs
+		updateColorsLeft();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {

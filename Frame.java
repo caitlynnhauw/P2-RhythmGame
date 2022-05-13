@@ -207,11 +207,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				currBlock[r][c] = temp;
 			}
 		}
-		best.queue.add("S");
+		best.queue.add("J");
 		best.queue.add("L");
 		best.queue.add("T");
 		best.queue.add("O");
-		best.spawn("test");
+		best.spawn(best.queue.get(0));
 		//best.toString();
  
 		JFrame f = new JFrame("Tetris");
@@ -279,7 +279,17 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			repaint();
 			
 			if(best.lineClearing) {
-				
+				try
+			      {
+			        System.out.println("Start of delay: ");
+			        // Delay for 1 seonds
+			        Thread.sleep(1000);   
+			        System.out.println("End of delay: ");
+			      }
+			      catch(InterruptedException ex)
+			      {
+			          ex.printStackTrace();
+			      }
 			}
 		}
 		
