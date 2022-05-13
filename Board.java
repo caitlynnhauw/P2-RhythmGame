@@ -438,7 +438,6 @@ public class Board {
 	public void clearLine() {
 		for (int r = board.length - 1; r >= 0; r--) {
 			if (isRowFilled(intBoard[r])) {
-				System.out.println("Hello");
 				for (int c = board[0].length - 1; c >= 0; c--) {
 					board[r][c] = false;
 					intBoard[r][c] = 0;

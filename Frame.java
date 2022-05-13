@@ -114,8 +114,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		for(int r = 0; r < currBlock.length; r++) {
 			for(int c = 0; c < currBlock[r].length; c++) {
-				currBlock[r][c].changeColor("darkteal");
 				currBlock[r][c].paint(g);
+				currBlock[r][c].changeColor("darkteal");
 			}
 		}
 		switch(best.queue.get(0)) {
@@ -124,7 +124,43 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			currBlock[1][2].changeColor("blue");
 			currBlock[2][1].changeColor("blue");
 			currBlock[2][2].changeColor("blue");
-
+			break;
+		case "L":
+			currBlock[2][0].changeColor("purple");
+			currBlock[1][2].changeColor("purple");
+			currBlock[2][1].changeColor("purple");
+			currBlock[2][2].changeColor("purple");
+			break;
+		case "J":
+			currBlock[1][1].changeColor("teal");
+			currBlock[2][3].changeColor("teal");
+			currBlock[2][1].changeColor("teal");
+			currBlock[2][2].changeColor("teal");
+			break;
+		case "T":
+			currBlock[2][0].changeColor("navy");
+			currBlock[1][1].changeColor("navy");
+			currBlock[2][1].changeColor("navy");
+			currBlock[2][2].changeColor("navy");
+			break;
+		case "S":
+			currBlock[1][1].changeColor("sky");
+			currBlock[1][2].changeColor("sky");
+			currBlock[2][1].changeColor("sky");
+			currBlock[2][0].changeColor("sky");
+			break;
+		case "Z":
+			currBlock[1][0].changeColor("vibrantblue");
+			currBlock[1][1].changeColor("vibrantblue");
+			currBlock[2][1].changeColor("vibrantblue");
+			currBlock[2][2].changeColor("vibrantblue");
+			break;
+		case "I":
+			currBlock[0][1].changeColor("violet");
+			currBlock[1][1].changeColor("violet");
+			currBlock[2][1].changeColor("violet");
+			currBlock[3][1].changeColor("violet");
+			break;
 		}
 		
 		
