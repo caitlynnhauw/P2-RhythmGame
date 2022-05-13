@@ -106,10 +106,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				nextBlocks[i*4][4].changeColor("vibrantblue");
 			}
 			if(best.queue.get(i).equals("I")) {
-				nextBlocks[i*4-2][3].changeColor("violet");
-				nextBlocks[i*4-1][3].changeColor("violet");
+				nextBlocks[i*4][1].changeColor("violet");
+				nextBlocks[i*4][2].changeColor("violet");
 				nextBlocks[i*4][3].changeColor("violet");
-				nextBlocks[i*4+1][3].changeColor("violet");
+				nextBlocks[i*4][4].changeColor("violet");
 			}
 		}
 		for(int r = 0; r < currBlock.length; r++) {
@@ -156,10 +156,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			currBlock[2][2].changeColor("vibrantblue");
 			break;
 		case "I":
-			currBlock[0][1].changeColor("violet");
-			currBlock[1][1].changeColor("violet");
+			currBlock[2][0].changeColor("violet");
 			currBlock[2][1].changeColor("violet");
-			currBlock[3][1].changeColor("violet");
+			currBlock[2][2].changeColor("violet");
+			currBlock[2][3].changeColor("violet");
 			break;
 		}
 		

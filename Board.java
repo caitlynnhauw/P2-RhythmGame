@@ -438,12 +438,13 @@ public class Board {
 	public void clearLine() {
 		for (int r = board.length - 1; r >= 0; r--) {
 			if (isRowFilled(intBoard[r])) {
+				//System.out.println("Hello");
 				for (int c = board[0].length - 1; c >= 0; c--) {
 					board[r][c] = false;
-					intBoard[r][c] = 0;
+					intBoard[r][c] = 2;
 				}
 				
-				pushBlocksDown(r, board);
+				pushBlocksDown(r);
 			
 			}
 		}
@@ -453,15 +454,15 @@ public class Board {
 		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
 		 * < board[r].length; c++) { if (intBoard[r][c] == 2) { count++; } }
 		 */
-
+		updateBoolArr();
 	} // end of clear line method
+	
 
-	public void pushBlocksDown(int r, boolean[][] array) {
+	
+	public void pushBlocksDown(int r) {
 		for (int row = r; row > 0; row--) {
-			for (int c = 0; c < array[0].length; c++) {
-				if (intBoard[r - 1][c] == 1 || intBoard[r][c] == 1 ) {
-					break;
-				} else {
+			for (int c = 0; c < intBoard[0].length; c++) {
+				if (intBoard[row][c] == 2) {
 					board[row][c] = board[row - 1][c];
 					intBoard[row][c] = intBoard[row - 1][c];
 					colorBoard[row][c] = colorBoard[row-1][c];
@@ -469,6 +470,7 @@ public class Board {
 			}
 		}
 	}
+
 
 
 
