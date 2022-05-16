@@ -226,6 +226,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		Timer t2 = new Timer(1, actions);
 		t2.start();
+		Timer keyDown = new Timer(60, falling);
+		keyDown.start();
 		//t2.setRepeats(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -295,12 +297,29 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 	};
  
+	ActionListener falling = new ActionListener() {
+		 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(best.fallKey == true) {
+				best.testFall();
+			}
+			if(best.leftKey == true) {
+				best.moveLeft();
+			}
+			if(best.rightKey == true) {
+				best.moveRight();
+			}
+		}
+		
+	};
+ 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		//System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {//Down
-			best.testFall();
+			best.fallKey = true;
 		}
 		if (arg0.getKeyCode() == 79) {//O
 			best.spawn("O");
@@ -324,17 +343,25 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.spawn("Z");
 		}
 		if(arg0.getKeyCode() == 39) {
-			best.moveRight();
+			best.rightKey = true;
 		}
 		if(arg0.getKeyCode() == 37) {
-			best.moveLeft();
+			best.leftKey = true;
 		}
 	}
  
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
- 
+		if (arg0.getKeyCode() == 40) {//Down
+			best.fallKey = false;
+		}
+		if(arg0.getKeyCode() == 39) {
+			best.rightKey = false;
+		}
+		if(arg0.getKeyCode() == 37) {
+			best.leftKey = false;
+		}
 	}
  
 	@Override
