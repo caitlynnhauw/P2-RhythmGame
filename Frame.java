@@ -317,7 +317,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		//System.out.println(arg0.getKeyCode());
+		System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {//Down
 			best.fallKey = true;
 		}
@@ -330,9 +330,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(arg0.getKeyCode() == 76) {//L
 			best.spawn("L");
 		}
-		if(arg0.getKeyCode() == 32) {//Spacebar
-			best.rotate(best.centerR, best.centerC); //Rotate will work for all except I piece
-		}
 		if(arg0.getKeyCode() == 74) {//J
 			best.spawn("J");
 		}
@@ -342,10 +339,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(arg0.getKeyCode() == 90) {//Z
 			best.spawn("Z");
 		}
-		if(arg0.getKeyCode() == 39) {
+		if(arg0.getKeyCode() == 32) {//Spacebar
+			best.fallKey = true;
+		}
+		if(arg0.getKeyCode() == 38) {//Up Arrow
+			best.rotate(best.centerR, best.centerC);
+		}
+		if(arg0.getKeyCode() == 39) {// ->
 			best.rightKey = true;
 		}
-		if(arg0.getKeyCode() == 37) {
+		if(arg0.getKeyCode() == 37) {// <-
 			best.leftKey = true;
 		}
 	}
@@ -361,6 +364,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if(arg0.getKeyCode() == 37) {
 			best.leftKey = false;
+		}
+		if(arg0.getKeyCode() == 32) {//Spacebar
+			best.fallKey = false;
 		}
 	}
  
