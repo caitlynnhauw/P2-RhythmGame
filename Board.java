@@ -24,9 +24,6 @@ public class Board {
 	String blockColor = "navy";
 	
 	public int centerR, centerC;
-	// Keeping track of pieces
-	// 0 - empty, 1 - I piece, 2 - O piece, 3 - T piece, 4 - L piece, 5 - J piece, 6
-	// - Z piece, 7 - S piece
 	// false - empty, true - not empty
 
 	public Board() {
@@ -349,7 +346,7 @@ public class Board {
 		}
 	}
 
-	public int[] intClockwiseTurn(int[] getter) { // clockwise turn repositions each element in a 9x9 array, to another
+	public int[] ClockwiseTurn(int[] getter) { // clockwise turn repositions each element in a 9x9 array, to another
 													// position (based off its current one)
 		int[] temp = new int[9];
 
@@ -388,53 +385,109 @@ public class Board {
 	}// end of clockwise rotate
 
 	public void rotate(int row, int col) {
-		int[] intGetter = new int[9];
-		int[] intSetter;
-		// boolean[] boolGetter = new boolean[9];
-		// boolean[] boolSetter;
+		int[] getter = new int[9];		   
+		int[] setter;
 		boolean isSet = false;
 		int count = 0;
-
-		for (int r = row - 1; r < row + 2; r++) {
-			for (int c = col - 1; c < col + 2; c++) {
-				intGetter[count] = intBoard[r][c];
-				// boolGetter[count] = board[r][c];
-				count++;
-			}
-		}
-		count = 0;
-
-		for (int i = 0; i < 9; i++) {
-			if (intGetter[i] == 2) {
-				isSet = true;
-			}
-		}
-
-		if (isSet == false) {
-			intSetter = intClockwiseTurn(intGetter);
-			// boolSetter = boolClockwiseTurn(boolGetter);
-
-			for (int i = 0; i < 9; i++) {
-				intGetter[i] = intSetter[i];
-				// boolGetter[i] = boolSetter[i];
-			}
-
-			/*
-			 * for(int i = 0; i < 9; i++) { if(i%3 == 0) { System.out.println(""); }
-			 * System.out.print(getter[i]); }
-			 */
-
-			for (int r = row - 1; r < row + 2; r++) {
-				for (int c = col - 1; c < col + 2; c++) {
-					intBoard[r][c] = intGetter[count];
-					// board[r][c] = boolGetter[count];
-					count++;
+		int leftEdge = 0;
+		int rightEdge = 0;
+		int iRightEdge = 0;
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && c == 9) {
+					rightEdge++;
+				}else if(intBoard[r][c] == 1 && c == 0){
+					leftEdge++;
+				}else if(intBoard[r][c] == 1 && c == 8) {
+					iRightEdge++;
 				}
 			}
 		}
-
-		count = 0;
-	}// end of rotate
+		if(rightEdge > 2 || rightEdge > 1 && isSZ == true) {
+			moveLeft();
+			rightEdge = 0;
+			leftEdge = 0;
+			iRightEdge = 0;
+			rotate(centerR, centerC);
+		}else if(leftEdge > 2 || leftEdge > 1 && isSZ == true) {
+			moveRight();
+			rightEdge = 0;
+			leftEdge = 0;
+			iRightEdge = 0;
+			rotate(centerR, centerC);
+		}else if(iRightEdge > 2 && isI == true) {
+			moveLeft();
+			rightEdge = 0;
+			leftEdge = 0;
+			iRightEdge = 0;
+			rotate(centerR, centerC);
+		}else{
+			if(isI == true) {
+				if(iRotate == false) {
+					if(intBoard[centerR][centerC+2] == 2) {
+						isSet = true;
+					}else {
+						isSet = false;
+					}
+				}else{
+					if(intBoard[centerR+2][centerC] == 2) {
+						isSet = true;
+					}else {
+						isSet = false;
+					}
+				}
+			}
+			for(int r = row-1; r < row+2; r++) {
+				for(int c = col-1; c < col+2; c++) {
+					getter[count] = intBoard[r][c];
+					count++;
+				}
+			}
+			count = 0;
+		
+			for(int i = 0; i < 9; i++) {
+				if(getter[i] == 2) {
+					isSet = true;
+				}
+			}
+		
+			if(isSet == false) {
+				setter = ClockwiseTurn(getter);
+				if(isI == true) {
+					if(iRotate == false) {
+						intBoard[centerR][centerC+2] = 1;
+						intBoard[centerR+2][centerC] = 0;
+						iRotate = true;
+					}else{
+						intBoard[centerR+2][centerC] = 1;
+						intBoard[centerR][centerC+2] = 0;
+						iRotate = false;
+					}
+				}
+		
+				for(int i = 0; i < 9; i++) {
+					getter[i] = setter[i];
+				}
+		
+				/*
+				for(int i = 0; i < 9; i++) {
+					if(i%3 == 0) {
+					System.out.println("");
+					}
+					System.out.print(getter[i]);
+				}
+			 	*/
+				
+				//setting the rotate
+				for(int r = row-1; r < row+2; r++) {
+					for(int c = col-1; c < col+2; c++) {
+						intBoard[r][c] = getter[count];
+						count++;
+					}
+				}
+			}
+		}
+	}//end of rotate
 
 	public void testFall() {
 		updateBoolArr();
@@ -515,7 +568,7 @@ public class Board {
 	public void updateColors() {
 		for(int r = 0; r < colorBoard.length; r++) {
 			for(int c = 0; c < colorBoard[0].length; c++) {
-				if(intBoard[r][c] == 1 && r != 19) {
+				if(intBoard[r][c] == 1 && r != 19  && intBoard[r+1][c] != 2) {
 					colorBoard[r+1][c] = blockColor;
 				}
 			}
