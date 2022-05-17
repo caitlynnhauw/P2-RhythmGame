@@ -185,7 +185,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		Timer t2 = new Timer(1, actions);
 		t2.start();
-		Timer keyDown = new Timer(60, falling);
+		Timer keyDown = new Timer(100, falling);
 		keyDown.start();
 		//t2.setRepeats(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -239,19 +239,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.clearLine();
 			repaint();
 			
-			if(best.lineClearing) {
-				try
-			      {
-			        System.out.println("Start of delay: ");
-			        // Delay for 1 seonds
-			        Thread.sleep(1000);   
-			        System.out.println("End of delay: ");
-			      }
-			      catch(InterruptedException ex)
-			      {
-			          ex.printStackTrace();
-			      }
-			}
 		}
 		
 	};
