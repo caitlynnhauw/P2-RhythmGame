@@ -4,9 +4,8 @@ public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
 	String[][] colorBoard = new String[20][10];
-	int[][] blockQueue = new int[17][6];
 	String[] randomBlock = { "O", "I", "S", "Z", "T", "L", "J" };
-	ArrayList<String> queue = new ArrayList<String>();
+	public static ArrayList<String> queue = new ArrayList<String>();
 	boolean testForNew = false;
 	boolean gameOver = false;
 	boolean isSZ = false;
