@@ -556,13 +556,14 @@ public class Board {
 	public void pushBlocksDown(int r) {
 		for (int row = r; row > 0; row--) {
 			for (int c = 0; c < intBoard[0].length; c++) {
-				if (intBoard[row][c] == 2) {
+				if (intBoard[row][c] == 2 || intBoard[row-1][c] == 2) {
 					board[row][c] = board[row - 1][c];
 					intBoard[row][c] = intBoard[row - 1][c];
 					colorBoard[row][c] = colorBoard[row-1][c];
 				}
 			}
 		}
+		toString();
 		
 	}
 	public void updateColors() {
