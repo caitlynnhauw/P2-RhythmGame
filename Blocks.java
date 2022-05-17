@@ -56,47 +56,49 @@ public class Blocks {
 	}
 
 	public static void nextMoves(int i, Blocks[][] data) {
-		if (Board.queue.get(i).equals("O")) {
+		switch(Board.queue.get(i)) {
+		case "O":
 			data[i * 4][3].changeColor("blue");
 			data[i * 4][4].changeColor("blue");
 			data[i * 4 - 1][3].changeColor("blue");
 			data[i * 4 - 1][4].changeColor("blue");
-		}
-		if(Board.queue.get(i).equals("L")) {
+			break;
+		case "L":
 			data[i*4-1][4].changeColor("purple");
 			data[i*4][3].changeColor("purple");
 			data[i*4][4].changeColor("purple");
 			data[i*4][2].changeColor("purple");
-		}
-		if(Board.queue.get(i).equals("J")) {
+			break;
+		case "J":
 			data[i*4-1][2].changeColor("teal");
 			data[i*4][3].changeColor("teal");
 			data[i*4][4].changeColor("teal");
 			data[i*4][2].changeColor("teal");
-		}
-		if(Board.queue.get(i).equals("T")) {
+			break;
+		case "T":
 			data[i*4-1][3].changeColor("navy");
 			data[i*4][3].changeColor("navy");
 			data[i*4][4].changeColor("navy");
 			data[i*4][2].changeColor("navy");
-		}
-		if(Board.queue.get(i).equals("S")) {
+			break;
+		case "S":
 			data[i*4-1][4].changeColor("sky");
 			data[i*4-1][3].changeColor("sky");
 			data[i*4][3].changeColor("sky");
 			data[i*4][2].changeColor("sky");
-		}
-		if(Board.queue.get(i).equals("Z")) {
+			break;
+		case "Z":
 			data[i*4-1][2].changeColor("vibrantblue");
 			data[i*4-1][3].changeColor("vibrantblue");
 			data[i*4][3].changeColor("vibrantblue");
 			data[i*4][4].changeColor("vibrantblue");
-		}
-		if(Board.queue.get(i).equals("I")) {
+			break;
+		case "I":
 			data[i*4][2].changeColor("violet");
 			data[i*4][3].changeColor("violet");
 			data[i*4][4].changeColor("violet");
 			data[i*4][5].changeColor("violet");
+			break;
 		}
 	}
 

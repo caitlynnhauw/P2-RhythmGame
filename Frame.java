@@ -136,9 +136,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
  
 		// g.fillRect(100, 100, 50, 50);
 		
-		for(int i = 0; i < 1000; i++) {
-			repaint();
-		}
 	}
  
 	public static void main(String[] arg) {
