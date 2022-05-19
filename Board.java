@@ -22,6 +22,8 @@ public class Board {
 	int clearRowIndex = 0;
 	String blockColor = "navy";
 	
+	static int linesCleared = 0;
+	
 	public int centerR, centerC;
 	// false - empty, true - not empty
 
@@ -529,7 +531,7 @@ public class Board {
 	}
 	
 	
-	public void clearLine() {
+	public boolean clearLine() {
 		for (int r = board.length - 1; r >= 0; r--) {
 			if (isRowFilled(intBoard[r])) {
 				//System.out.println("Hello");
@@ -539,19 +541,30 @@ public class Board {
 				}
 				
 				pushBlocksDown(r);
+				linesCleared++;
 			
 			}
+		}
+		
+		updateBoolArr();
+		
+		if(linesCleared > 0) {
+			return true;
+		}else {
+			return false;
 		}
 
 		/*
 		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
 		 * < board[r].length; c++) { if (intBoard[r][c] == 2) { count++; } }
 		 */
-		updateBoolArr();
 	} // end of clear line method
 	
-
+	public static int getLinesCleared() {
+		return linesCleared;
+	}
 	
+
 	public void pushBlocksDown(int r) {
 		for (int row = r; row > 0; row--) {
 			for (int c = 0; c < intBoard[0].length; c++) {
