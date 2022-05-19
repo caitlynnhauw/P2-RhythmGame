@@ -20,6 +20,7 @@ public class Board {
 	int sec = 0;
 	int fallSec = 0;
 	int clearRowIndex = 0;
+	int landingRow = 0;
 	String blockColor = "navy";
 	
 	static int linesCleared = 0;
@@ -710,5 +711,17 @@ public class Board {
 		for(int e = 0; e < queue.size(); e++) {
 			
 		}
+	}
+	public void previewLand() {
+		for(int r = 0; r < intBoard.length; r++) {
+			if(intBoard[r][centerC] != 2 && intBoard[r][centerC+1] != 2 && intBoard[r][centerC-1] != 2) {
+				landingRow = r;
+			}
+			
+		}
+		intBoard[landingRow][centerC] = 2;
+		colorBoard[landingRow][centerC] = "navy";
+		System.out.println(landingRow);
+		
 	}
 }
