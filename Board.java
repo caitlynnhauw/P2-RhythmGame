@@ -344,7 +344,6 @@ public class Board {
 			queue.add(randomBlock[(int) rnd]);
 			spawn(queue.get(0));
 			testForNew = false;
-			tmpToString();
 		}
 	}
 
@@ -703,10 +702,6 @@ public class Board {
 		return "";
 	}// end of toString
 	
-	public void tmpToString() {
-		System.out.println(queue);
-	}
-	
 	public void nextMoves() {
 		for(int e = 0; e < queue.size(); e++) {
 			
@@ -719,8 +714,6 @@ public class Board {
 			}
 			
 		}
-		intBoard[landingRow][centerC] = 2;
-		colorBoard[landingRow][centerC] = "navy";
 		System.out.println(landingRow);
 		
 	}
