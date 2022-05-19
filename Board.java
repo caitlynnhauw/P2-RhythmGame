@@ -21,7 +21,7 @@ public class Board {
 	int fallSec = 0;
 	int clearRowIndex = 0;
 	int landingRow = 0;
-	String blockColor = "navy";
+	String blockColor = "nothingtest";
 	
 	static int linesCleared = 0;
 	
@@ -311,6 +311,7 @@ public class Board {
 		}
 		
 		nextMoves();
+		
 	}// end of update
 
 	public void updateBoolArr() {
@@ -712,7 +713,6 @@ public class Board {
 			if(intBoard[r][centerC] != 2 && intBoard[r][centerC+1] != 2 && intBoard[r][centerC-1] != 2) {
 				landingRow = r;
 			}
-			
 		}
 		System.out.println(landingRow);
 		

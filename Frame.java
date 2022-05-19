@@ -61,9 +61,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 						best.colorBoard[r][c] = best.blockColor;
 					}
 				} else {
-					Blocks temp = new Blocks((c * 35) + 200, (r * 35) + 70, "darkteal");
-
+					if(!best.board[r][c]) {
+						Blocks temp = new Blocks((c * 35) + 200, (r * 35) + 70, "darkteal");
+					
 					tetris[r][c] = temp;
+					}
 				}
 			}
 		}
