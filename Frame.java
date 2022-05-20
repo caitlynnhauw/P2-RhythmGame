@@ -20,10 +20,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Background b = new Background(-120, 0);
 	Bird bird = new Bird(-50, 0);
 
-	Blocks blue = new Blocks(175, 70, "blue");
-	Blocks navy = new Blocks(100, 135, "navy");
-	Blocks purple = new Blocks(135, 100, "purple");
-	Blocks btest = new Blocks(0, 0, "sky");
+	static Blocks one = new Blocks(0, 0, "sky");
+	static Blocks two = new Blocks(0, 0, "sky");
+	static Blocks three = new Blocks(0, 0, "sky");
+	static Blocks four = new Blocks(0, 0, "sky");
 
 	Board best = new Board();
 
@@ -135,7 +135,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// ask the objects to paint themselves
 
 		bird.paint(g);
-		btest.paint(g);
+		one.paint(g);
+		two.paint(g);
+		three.paint(g);
+		four.paint(g);
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
 		int green = ((int) (Math.random() * 255));
@@ -258,6 +261,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		if (best.gameOver == false) {
 			best.testFall();
+			
 		}
 	}
 

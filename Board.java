@@ -309,9 +309,7 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
-		
-		nextMoves();
-		
+		previewLand();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -519,6 +517,7 @@ public class Board {
 		}
 		centerR++;
 		//toString();
+		
 	}
 
 	public boolean isRowFilled(int[] row) {
@@ -703,18 +702,36 @@ public class Board {
 		return "";
 	}// end of toString
 	
-	public void nextMoves() {
-		for(int e = 0; e < queue.size(); e++) {
-			
+	public void findAllOnes() {
+		int[] indexes = new int[4];
+		
+		int i = 0;
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[r].length; c++) {
+				if(intBoard[r][c] == 1) {
+					indexes[i] = c;
+					i++;
+				}
+			}
 		}
+		Frame.one.setY(landingRow*35+35);
+		Frame.one.setX(indexes[0]*35+200);
+		Frame.two.setY(landingRow*35+70);
+		Frame.two.setX(indexes[1]*35+200);
+		Frame.three.setY(landingRow*35+70);
+		Frame.three.setX(indexes[2]*35+200);
+		Frame.four.setY(landingRow*35+70);
+		Frame.four.setX(indexes[3]*35+200);
 	}
+	
 	public void previewLand() {
 		for(int r = 0; r < intBoard.length; r++) {
 			if(intBoard[r][centerC] != 2 && intBoard[r][centerC+1] != 2 && intBoard[r][centerC-1] != 2) {
 				landingRow = r;
 			}
 		}
-		System.out.println(landingRow);
-		
+		Frame.one.setY((landingRow*35)+70);
+		Frame.one.setX((centerC*35)+200);
+		findAllOnes();
 	}
 }

@@ -48,7 +48,8 @@ public class Blocks {
 	private void update() {
 
 		random = rnd.nextInt(420) + 0;
-
+		tx.setToTranslation(x, y);
+		tx.scale(1, 1);
 	}
 
 	public void changeColor(String color) {
