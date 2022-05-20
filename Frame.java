@@ -222,7 +222,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					score += 400;
 					best.linesCleared = 0;
 					break;
-		}
+			}
 		}
 	}
 
@@ -265,20 +265,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 	}
 
-	ActionListener actions=new ActionListener(){
+	ActionListener actions = new ActionListener(){
 
-	@Override public void actionPerformed(ActionEvent e){best.clearLine();repaint();
-
-	scoring();
-
-	}
-
+	@Override public void actionPerformed(ActionEvent e){
+		best.clearLine();
+		if(best.isOnEdge(0, 0) == false) {
+			best.test.restart();
+			best.test.stop();
+		}
+		repaint();
+		scoring();
+		}
 	};
 
-	ActionListener falling=new ActionListener(){
+	ActionListener falling = new ActionListener(){
 
-	@Override public void actionPerformed(ActionEvent e){if(best.fallKey==true){best.testFall();}if(best.leftKey==true){best.moveLeft();}if(best.rightKey==true){best.moveRight();}}
-
+		@Override public void actionPerformed(ActionEvent e){
+			if(best.fallKey==true){
+				best.testFall();
+			}
+			if(best.leftKey==true){
+				best.moveLeft();
+			}
+			if(best.rightKey==true){
+				best.moveRight();
+			}
+		}
 	};
 
 	@Override
@@ -311,12 +323,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if (arg0.getKeyCode() == 38) {// Up Arrow
 			best.rotate(best.centerR, best.centerC);
+			best.keyDown = true;
 		}
 		if (arg0.getKeyCode() == 39) {// ->
 			best.rightKey = true;
+			best.times();
 		}
 		if (arg0.getKeyCode() == 37) {// <-
 			best.leftKey = true;
+			best.times();
 		}
 	}
 
@@ -325,15 +340,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		if (arg0.getKeyCode() == 40) {// Down
 			best.fallKey = false;
+			best.keyDown = false;
 		}
 		if (arg0.getKeyCode() == 39) {
 			best.rightKey = false;
+			best.keyDown = false;
 		}
 		if (arg0.getKeyCode() == 37) {
 			best.leftKey = false;
+			best.keyDown = false;
 		}
 		if (arg0.getKeyCode() == 32) {// Spacebar
 			best.fallKey = false;
+			best.keyDown = false;
 		}
 	}
 

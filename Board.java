@@ -1,4 +1,8 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 public class Board {
 	boolean[][] board = new boolean[20][10];
@@ -16,6 +20,8 @@ public class Board {
 	boolean leftKey = false;
 	boolean isRowFilled = false;
 	boolean lineClearing = false;
+	boolean keyDown = false;
+	boolean timerStarted = false;
 	int topRowFilled = 0;
 	int sec = 0;
 	int fallSec = 0;
@@ -40,6 +46,8 @@ public class Board {
 	}
 
 	public void setEmpty() {
+		test.stop();
+		timerStarted = false;
 		for (int r = 0; r < board.length; r++) {
 			for (int c = 0; c < board[0].length; c++) {
 				board[r][c] = false;
@@ -61,7 +69,7 @@ public class Board {
 			int width = 2;
 			int height = 2;
 			
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			for(int r = 0; r < height; r++) {
@@ -92,7 +100,7 @@ public class Board {
 			int width = 1;
 			int height = 4;
 			int count = 0;
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -118,7 +126,7 @@ public class Board {
 			int height = 2;
 			int i = 0;
 			int count = 1;
-			double rnd = Math.floor(Math.random()*(11-width));	
+			double rnd = 4.0;	
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -153,7 +161,7 @@ public class Board {
 			int height = 2;
 			int i = 0;
 			int count = 1;
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -186,7 +194,7 @@ public class Board {
 			int height = 2;
 			int i = 0;
 			int count = 1;
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -221,7 +229,7 @@ public class Board {
 			int height = 2;
 			int i = 0;
 			int count = 1;
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -256,7 +264,7 @@ public class Board {
 			int height = 2;
 			int i = 0;
 			int count = 1;
-			double rnd = Math.floor(Math.random()*(11-width));
+			double rnd = 4.0;
 			//double rndColor = Math.floor(Math.random()*((randomColor.length+1)-width));
 			//String color = randomColor[(int) rndColor];
 			
@@ -293,8 +301,10 @@ public class Board {
 		for (int r = board.length - 1; r >= 0; r--) {
 			for (int c = board[r].length - 1; c >= 0; c--) {
 				if (board[r][c] == true) {
-					if (intBoard[r + 1][c] == 2)
-						setEmpty();
+					if (intBoard[r + 1][c] == 2) {
+						test.start();
+						timerStarted = true;
+					}
 				}
 			}
 		}
@@ -347,7 +357,7 @@ public class Board {
 	}
 
 	public int[] ClockwiseTurn(int[] getter) { // clockwise turn repositions each element in a 9x9 array, to another
-													// position (based off its current one)
+												// position (based off its current one)
 		int[] temp = new int[9];
 
 		for (int i = 0; i < 9; i++) {
@@ -356,26 +366,36 @@ public class Board {
 		}
 
 		for (int i = 0; i < 9; i++) {
-			if (i == 0) {
+			switch(i) {
+			case 0:
 				getter[2] = temp[i];
-			} else if (i == 1) {
+				break;
+			case 1:
 				getter[5] = temp[i];
-			} else if (i == 2) {
+				break;
+			case 2:
 				getter[8] = temp[i];
-			} else if (i == 3) {
+				break;
+			case 3:
 				getter[1] = temp[i];
-			} else if (i == 4) {
+				break;
+			case 4:
 				getter[4] = temp[i];
-			} else if (i == 5) {
+				break;
+			case 5:
 				getter[7] = temp[i];
-			} else if (i == 6) {
+				break;
+			case 6:
 				getter[0] = temp[i];
-			} else if (i == 7) {
+				break;
+			case 7:
 				getter[3] = temp[i];
-			} else if (i == 8) {
+				break;
+			case 8:
 				getter[6] = temp[i];
+				break;
 			}
-		}
+			}
 
 		for (int i = 0; i < 9; i++) {
 			// System.out.print(getter[i]);
@@ -417,6 +437,12 @@ public class Board {
 			rotate(centerR, centerC);
 		}else if(iRightEdge > 2 && isI == true) {
 			moveLeft();
+			rightEdge = 0;
+			leftEdge = 0;
+			iRightEdge = 0;
+			rotate(centerR, centerC);
+		}else if(intBoard[centerR+1][centerC] == 2 && leftEdge < 2 && rightEdge < 2 || centerR == 19 && leftEdge < 2 && rightEdge < 2) {
+			moveUp();
 			rightEdge = 0;
 			leftEdge = 0;
 			iRightEdge = 0;
@@ -482,6 +508,9 @@ public class Board {
 				for(int r = row-1; r < row+2; r++) {
 					for(int c = col-1; c < col+2; c++) {
 						intBoard[r][c] = getter[count];
+						if(intBoard[r][c] == 1) {
+							colorBoard[r][c] = blockColor;
+						}
 						count++;
 					}
 				}
@@ -492,32 +521,42 @@ public class Board {
 	public void testFall() {
 		updateBoolArr();
 		updateColors();
+		boolean holder = isOnEdge(0, 0);
+		if(isOnEdge(0,0) == false) {
+			centerR++;
+		}
 		for (int r = board.length - 1; r >= 0; r--) {
 			for (int c = board[0].length - 1; c >= 0; c--) {
 
-				if (board[r][c] == true) {
+				if (board[r][c] == true && r != 19) {
 					if (intBoard[r + 1][c] == 2) {
-						setEmpty();
+						test.start();
+						timerStarted = true;
 						break;
 					}
-					board[r + 1][c] = board[r][c];
-					intBoard[r + 1][c] = 1;
-					colorBoard[r + 1][c] = colorBoard[r][c];
-					board[r][c] = false;
-					intBoard[r][c] = 0;
-					colorBoard[r][c] = blockColor;
+					//System.out.print(isOnEdge(intBoard.length - r, intBoard[0].length - c));
+					if(isOnEdge(intBoard.length - r, intBoard[0].length - c) == false && board[r+1][c] == false && holder == false) {
+						board[r + 1][c] = board[r][c];
+						intBoard[r + 1][c] = 1;
+						colorBoard[r + 1][c] = colorBoard[r][c];
+						board[r][c] = false;
+						intBoard[r][c] = 0;
+						colorBoard[r][c] = blockColor;
+					}
 				}
 			}
 		}
 		for (int c = board[0].length - 1; c >= 0; c--) {
 			if (board[board.length - 1][c]) {
-				setEmpty();
+				test.start();
+				timerStarted = true;
 				centerR--;
+				
 			}
 		}
-		centerR++;
-		//toString();
+		//System.out.println("CenterR is: " + centerR);
 		
+		//toString();
 	}
 
 	public boolean isRowFilled(int[] row) {
@@ -564,7 +603,7 @@ public class Board {
 		return linesCleared;
 	}
 	
-
+	
 	public void pushBlocksDown(int r) {
 		for (int row = r; row > 0; row--) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -588,6 +627,16 @@ public class Board {
 		}
 	}
 	
+	public void updateColorsUp() {
+		for(int r = 1; r < colorBoard.length; r++) {
+			for(int c = 0; c < colorBoard[0].length; c++) {
+				if(intBoard[r][c] == 1 && intBoard[r-1][c] != 2) {
+					colorBoard[r-1][c] = blockColor;
+				}
+			}
+		}
+	}
+	
 	public void updateColorsRight() {
 		for(int r = 0; r < colorBoard.length; r++) {
 			for(int c = 0; c < colorBoard[0].length; c++) {
@@ -599,6 +648,7 @@ public class Board {
 			}
 		}
 	}
+	
 	public void updateColorsLeft() {
 		for(int r = 0; r < colorBoard.length; r++) {
 			for(int c = 0; c < colorBoard[0].length; c++) {
@@ -611,8 +661,36 @@ public class Board {
 		}
 	}
 
+	public void moveUp() {
+		updateColorsUp();
+		boolean isEdge = false;
+		for (int r = 1; r < intBoard.length; r++) {
+			for (int c = 0; c < intBoard[0].length; c++) {
+				if (r == 0 && intBoard[r][c] == 1) {
+					isEdge = true;
+					// System.out.print(isEdge);
+				} else if (r != 0) {
+					if (intBoard[r -1][c] == 2 && intBoard[r][c] == 1) {
+						isEdge = true;
+					}
+				}
+			}
+		}
 
+		if (isEdge == false) {
+			for (int r = 1; r < intBoard.length; r++) {
+				for (int c = 0; c < intBoard[0].length; c++) {
+					if (intBoard[r][c] == 1) {
+						intBoard[r-1][c] = 1;
+						intBoard[r][c] = 0;
+					}
 
+				}
+			}
+			centerR--;
+			// System.out.println("Current centerC: " + centerC);
+		}
+	}
 
 	public void moveRight() { // has a couple bugs
 		updateColorsRight();
@@ -734,4 +812,37 @@ public class Board {
 		Frame.one.setX((centerC*35)+200);
 		findAllOnes();
 	}
+	
+	public boolean isOnEdge(int row, int col) {
+		for(int r = intBoard.length-1 - row; r > -1; r--) {
+			for(int c = intBoard[0].length-1 - col; c > -1; c--) {
+				if(r != 19) {
+					if(intBoard[r][c] == 1 && intBoard[r+1][c] == 2) {
+						return true;
+					}
+				}else if(r == 19 && intBoard[r][c] == 1) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public void times() {
+		if(keyDown == true && timerStarted == true) {
+			test.restart();
+		}
+	}
+	
+	ActionListener delay = new ActionListener() {
+		 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			setEmpty();			
+		}
+		
+	};
+	
+	Timer test = new Timer(350, delay);
 }
