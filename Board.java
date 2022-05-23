@@ -29,6 +29,7 @@ public class Board {
 	int landingRow = 0;
 	int[] oneRows = new int[4];
 	int[] oneCols = new int[4];
+	int[] y = new int [4];
 
 	String blockColor = "nothingtest";
 	
@@ -314,7 +315,7 @@ public class Board {
 
 		// test for gameOver
 		for (int c = 0; c < board[0].length; c++) {
-			if (intBoard[1][c] == 2) {
+			if (intBoard[7][c] == 2) {
 				topRowFilled++;
 			}
 		}
@@ -785,7 +786,6 @@ public class Board {
 	
 	public void findAllOnes() {
 		int i = 0;
-		int[] y = new int [4];
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[r].length; c++) {
 				if(intBoard[r][c] == 1) {
@@ -816,11 +816,12 @@ public class Board {
 	public void previewLand() {
 		findAllOnes();
 		for(int r = 0; r < intBoard.length; r++) {
-			if(intBoard[oneRows[0]+1][oneCols[0]] != 2 && intBoard[oneRows[1]+1][oneCols[1]] != 2 
-			&& intBoard[oneRows[2]+1][oneCols[2]] != 2 && intBoard[oneRows[3]+1][oneCols[3]] != 2) {
+			
+			if(intBoard[r][centerC] != 2) {
 				landingRow = r;
 			}
 		}
+		System.out.println(landingRow);
 	}
 
 	

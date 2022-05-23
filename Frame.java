@@ -19,6 +19,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	Background b = new Background(-120, 0);
 	Bird bird = new Bird(-50, 0);
+	Effects stars = new Effects(0, 0, "shootingstars", ".gif");
 
 	static Blocks one = new Blocks(0, 0, "teal");
 	static Blocks two = new Blocks(0, 0, "teal");
@@ -39,6 +40,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// m.run();
 		// paint the board contents
 		b.paint(g);
+		stars.paint(g);
 		for (Blocks[] r : tetris) {
 			for (Blocks c : r) {
 				c.paint(g);
@@ -139,6 +141,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		two.paint(g);
 		three.paint(g);
 		four.paint(g);
+		
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
 		int green = ((int) (Math.random() * 255));
@@ -295,28 +298,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		if(best.gameOver == false) {
 		// TODO Auto-generated method stub
 		//System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 40) {// Down
 			best.fallKey = true;
-		}
-		if (arg0.getKeyCode() == 79) {// O
-			best.spawn("O");
-		}
-		if (arg0.getKeyCode() == 83) {// S
-			best.spawn("S");
-		}
-		if (arg0.getKeyCode() == 76) {// L
-			best.spawn("L");
-		}
-		if (arg0.getKeyCode() == 74) {// J
-			best.spawn("J");
-		}
-		if (arg0.getKeyCode() == 84) {// T
-			best.spawn("T");
-		}
-		if (arg0.getKeyCode() == 90) {// Z
-			best.spawn("Z");
 		}
 		if (arg0.getKeyCode() == 32) {// Spacebar
 			best.previewLand();
@@ -333,7 +319,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.leftKey = true;
 			best.times();
 		}
-	}
+	}}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
