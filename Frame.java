@@ -20,10 +20,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Background b = new Background(-120, 0);
 	Bird bird = new Bird(-50, 0);
 
-	static Blocks one = new Blocks(0, 0, "sky");
-	static Blocks two = new Blocks(0, 0, "sky");
-	static Blocks three = new Blocks(0, 0, "sky");
-	static Blocks four = new Blocks(0, 0, "sky");
+	static Blocks one = new Blocks(0, 0, "teal");
+	static Blocks two = new Blocks(0, 0, "teal");
+	static Blocks three = new Blocks(0, 0, "teal");
+	static Blocks four = new Blocks(0, 0, "teal");
 
 	Board best = new Board();
 

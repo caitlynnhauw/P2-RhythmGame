@@ -27,6 +27,9 @@ public class Board {
 	int fallSec = 0;
 	int clearRowIndex = 0;
 	int landingRow = 0;
+	int[] oneRows = new int[4];
+	int[] oneCols = new int[4];
+
 	String blockColor = "nothingtest";
 	
 	static int linesCleared = 0;
@@ -298,8 +301,8 @@ public class Board {
 	}//end of spawn
 
 	public void update() {
-		for (int r = board.length - 1; r >= 0; r--) {
-			for (int c = board[r].length - 1; c >= 0; c--) {
+		for (int r = board.length - 2; r >= 0; r--) {
+			for (int c = 0; c < board[r].length; c++) {
 				if (board[r][c] == true) {
 					if (intBoard[r + 1][c] == 2) {
 						test.start();
@@ -319,7 +322,7 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
-		previewLand();
+		//previewLand();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -781,37 +784,45 @@ public class Board {
 	}// end of toString
 	
 	public void findAllOnes() {
-		int[] indexes = new int[4];
-		
 		int i = 0;
+		int[] y = new int [4];
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[r].length; c++) {
 				if(intBoard[r][c] == 1) {
-					indexes[i] = c;
+					oneCols[i] = c;
+					y[i] =(r - centerR);
+					oneRows[i] = r;
 					i++;
 				}
 			}
 		}
-		Frame.one.setY(landingRow*35+35);
-		Frame.one.setX(indexes[0]*35+200);
-		Frame.two.setY(landingRow*35+70);
-		Frame.two.setX(indexes[1]*35+200);
-		Frame.three.setY(landingRow*35+70);
-		Frame.three.setX(indexes[2]*35+200);
-		Frame.four.setY(landingRow*35+70);
-		Frame.four.setX(indexes[3]*35+200);
+		Frame.one.changeColor(blockColor);
+		Frame.one.setY(landingRow*35+(y[0]*35)+35);
+		Frame.one.setX(oneCols[0]*35+200);
+		
+		Frame.two.changeColor(blockColor);
+		Frame.two.setY(landingRow*35+(y[1]*35)+35);
+		Frame.two.setX(oneCols[1]*35+200);
+		
+		Frame.three.changeColor(blockColor);
+		Frame.three.setY(landingRow*35+(y[2]*35)+35);
+		Frame.three.setX(oneCols[2]*35+200);
+		
+		Frame.four.changeColor(blockColor);
+		Frame.four.setY(landingRow*35+(y[3]*35)+35);
+		Frame.four.setX(oneCols[3]*35+200);
 	}
 	
 	public void previewLand() {
+		findAllOnes();
 		for(int r = 0; r < intBoard.length; r++) {
-			if(intBoard[r][centerC] != 2 && intBoard[r][centerC+1] != 2 && intBoard[r][centerC-1] != 2) {
+			if(intBoard[oneRows[0]+1][oneCols[0]] != 2 && intBoard[oneRows[1]+1][oneCols[1]] != 2 
+			&& intBoard[oneRows[2]+1][oneCols[2]] != 2 && intBoard[oneRows[3]+1][oneCols[3]] != 2) {
 				landingRow = r;
 			}
 		}
-		Frame.one.setY((landingRow*35)+70);
-		Frame.one.setX((centerC*35)+200);
-		findAllOnes();
 	}
+
 	
 	public boolean isOnEdge(int row, int col) {
 		for(int r = intBoard.length-1 - row; r > -1; r--) {
