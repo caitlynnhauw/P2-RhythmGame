@@ -29,6 +29,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Board best = new Board();
 
 	int score = 0;
+	int level = 1;
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
@@ -51,6 +52,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		g.setColor(Color.white);
 		g.setFont(new Font("Arial Black", Font.BOLD, 60));
 		g.drawString(s, 50, 500);
+		String l = "Level: " + Integer.toString(level);
+		g.setColor(Color.white);
+		g.setFont(new Font("Arial Black", Font.BOLD, 30));
+		g.drawString(l, 35, 700);
+
 
 		// test out creating the board using the Board class
 		for (int r = 0; r < best.board.length; r++) {
@@ -137,10 +143,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// ask the objects to paint themselves
 
 		bird.paint(g);
-		one.paint(g);
-		two.paint(g);
-		three.paint(g);
-		four.paint(g);
+		//one.paint(g);
+		//two.paint(g);
+		//three.paint(g);
+		//four.paint(g);
 		
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
@@ -228,6 +234,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 	}
+	
+	public void levels() {
+		if (best.clearLine()) {
+			if (Board.getTotalLinesCleared() >= 20 && Board.getTotalLinesCleared() < 30) {
+				level = 2;
+			} else if (Board.getTotalLinesCleared() >= 30 && Board.getTotalLinesCleared() < 60) {
+				level = 3;
+			} else if (Board.getTotalLinesCleared() >= 60) {
+				level = 4;
+		}
+	}
+	}
+
+
+
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -278,6 +299,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		repaint();
 		scoring();
+		levels();
 		}
 	};
 

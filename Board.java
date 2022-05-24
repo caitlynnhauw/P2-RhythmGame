@@ -33,8 +33,10 @@ public class Board {
 
 	String blockColor = "nothingtest";
 	
-	static int linesCleared = 0;
-	
+	static int linesCleared = 0; // lines cleared in one clear
+	static int totalLinesCleared = 0; // lines cleared total
+	static int storeLines = 0;
+
 	public int centerR, centerC;
 	// false - empty, true - not empty
 
@@ -314,11 +316,9 @@ public class Board {
 		}
 
 		// test for gameOver
-		for (int c = 0; c < board[0].length; c++) {
-			if (intBoard[7][c] == 2) {
+			if (intBoard[1][7] == 2) {
 				topRowFilled++;
 			}
-		}
 		if (topRowFilled > 5) {
 			gameOver = true;
 			System.out.println("Game Over");
@@ -577,35 +577,47 @@ public class Board {
 	public boolean clearLine() {
 		for (int r = board.length - 1; r >= 0; r--) {
 			if (isRowFilled(intBoard[r])) {
-				//System.out.println("Hello");
+				// System.out.println("Hello");
 				for (int c = board[0].length - 1; c >= 0; c--) {
 					board[r][c] = false;
 					intBoard[r][c] = 2;
 				}
-				
+ 
 				pushBlocksDown(r);
 				linesCleared++;
-			
+ 
 			}
 		}
-		
+ 
 		updateBoolArr();
-		
-		if(linesCleared > 0) {
-			return true;
-		}else {
-			return false;
-		}
-
+		System.out.println("lines cleared: " + linesCleared);
+		return true;
+ 
 		/*
 		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
 		 * < board[r].length; c++) { if (intBoard[r][c] == 2) { count++; } }
 		 */
 	} // end of clear line method
+
 	
 	public static int getLinesCleared() {
 		return linesCleared;
 	}
+	public void evaluateLevel() {
+		if (linesCleared > 0) {
+			totalLinesCleared += linesCleared;
+			linesCleared = 0;
+		}
+	}
+ 
+	public static void setClearedLines(int newLines) {
+		linesCleared = newLines;
+	}// end of getLinesCleared method
+ 
+	public static int getTotalLinesCleared() {
+		return totalLinesCleared;
+	}
+
 	
 	
 	public void pushBlocksDown(int r) {
