@@ -603,11 +603,14 @@ public class Board {
 	public static int getLinesCleared() {
 		return linesCleared;
 	}
-	public void evaluateLevel() {
+	public boolean evaluateLevel() {
 		if (linesCleared > 0) {
 			totalLinesCleared += linesCleared;
+			System.out.println("total lines cleared: " + totalLinesCleared);
 			linesCleared = 0;
+			return true;
 		}
+		return false;
 	}
  
 	public static void setClearedLines(int newLines) {

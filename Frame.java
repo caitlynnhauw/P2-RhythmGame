@@ -30,6 +30,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	int score = 0;
 	int level = 1;
+	int currentTime = 1000;
 	// Music m = new Music("Justin_Bieber_ft_Ludacris_-_Baby__NaijaGreen.Com__.wav",
 	// false);
 	Blocks[][] tetris = new Blocks[20][10];
@@ -198,7 +199,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setLayout(new GridLayout(1, 2));
 		f.addMouseListener(this);
 		f.addKeyListener(this);
-		Timer t = new Timer(1000, this);
+		Timer t = new Timer(currentTime, this);
 		t.start();
 		Timer t2 = new Timer(1, actions);
 		t2.start();
@@ -214,22 +215,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			switch(Board.getLinesCleared()){
 				case 1:
 					score += 100;
-					best.linesCleared = 0;
+					best.evaluateLevel();
 					break;
 			
 				case 2:
 					score += 200;
-					best.linesCleared = 0;
+					best.evaluateLevel();
 					break;
 		
 				case 3:
 					score += 300;
-					best.linesCleared = 0;
+					best.evaluateLevel();
 					break;
 		
 				case 4:
 					score += 400;
-					best.linesCleared = 0;
+					best.evaluateLevel();
 					break;
 			}
 		}
@@ -239,10 +240,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if (best.clearLine()) {
 			if (Board.getTotalLinesCleared() >= 20 && Board.getTotalLinesCleared() < 30) {
 				level = 2;
+				currentTime -= 50;
 			} else if (Board.getTotalLinesCleared() >= 30 && Board.getTotalLinesCleared() < 60) {
 				level = 3;
+				currentTime -= 50;
 			} else if (Board.getTotalLinesCleared() >= 60) {
 				level = 4;
+				currentTime -= 50;
 		}
 	}
 	}
