@@ -486,11 +486,15 @@ public class Board {
 				if(isI == true) {
 					if(iRotate == false) {
 						intBoard[centerR][centerC+2] = 1;
+						colorBoard[centerR][centerC+2] = blockColor;
 						intBoard[centerR+2][centerC] = 0;
+						colorBoard[centerR+2][centerC] = "darkteal";
 						iRotate = true;
 					}else{
 						intBoard[centerR+2][centerC] = 1;
+						colorBoard[centerR+2][centerC] = blockColor;
 						intBoard[centerR][centerC+2] = 0;
+						colorBoard[centerR][centerC+2] = "darkteal";
 						iRotate = false;
 					}
 				}
@@ -681,7 +685,7 @@ public class Board {
 	}
 
 	public void moveUp() {
-		updateColorsUp();
+		//updateColorsUp();
 		boolean isEdge = false;
 		for (int r = 1; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -701,7 +705,9 @@ public class Board {
 				for (int c = 0; c < intBoard[0].length; c++) {
 					if (intBoard[r][c] == 1) {
 						intBoard[r-1][c] = 1;
+						colorBoard[r-1][c] = blockColor;
 						intBoard[r][c] = 0;
+						colorBoard[r][c] = "darkteal";
 					}
 
 				}
@@ -712,7 +718,7 @@ public class Board {
 	}
 
 	public void moveRight() { // has a couple bugs
-		updateColorsRight();
+		//updateColorsRight();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -732,7 +738,9 @@ public class Board {
 				for (int c = intBoard[0].length - 1; c > -1; c--) {
 					if (intBoard[r][c] == 1) {
 						intBoard[r][c + 1] = 1;
+						colorBoard[r][c+1] = blockColor;
 						intBoard[r][c] = 0;
+						colorBoard[r][c] = "darkteal";
 					}
 
 				}

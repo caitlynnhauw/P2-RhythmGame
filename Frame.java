@@ -60,7 +60,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 
 		// test out creating the board using the Board class
-		for (int r = 0; r < best.board.length; r++) {
+		/*for (int r = 0; r < best.board.length; r++) {
 			for (int c = 0; c < best.board[r].length; c++) {
 				if (best.intBoard[r][c] >= 1) {
 					Blocks temp = new Blocks((c * 35) + 200, (r * 35) + 70, best.colorBoard[r][c]);
@@ -75,6 +75,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					
 					tetris[r][c] = temp;
 					}
+				}
+			}
+		}
+		*/
+		
+		for(int r = 0; r < best.intBoard.length; r++) {
+			for(int c = 0; c < best.intBoard[r].length; c++) {
+				if(best.intBoard[r][c] == 0) {
+					tetris[r][c].changeColor("darkteal");
+				}
+				if(best.intBoard[r][c] == 1) {
+					tetris[r][c].changeColor(best.blockColor);
 				}
 			}
 		}
