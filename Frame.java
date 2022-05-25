@@ -226,22 +226,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(best.clearLine()){
 			switch(Board.getLinesCleared()){
 				case 1:
-					score += 100;
+					score += (100 * level);
 					best.evaluateLevel();
 					break;
 			
 				case 2:
-					score += 200;
+					score += (200 * level);
 					best.evaluateLevel();
 					break;
 		
 				case 3:
-					score += 300;
+					score += (300 * level);
 					best.evaluateLevel();
 					break;
 		
 				case 4:
-					score += 400;
+					score += (400 * level);
 					best.evaluateLevel();
 					break;
 			}
