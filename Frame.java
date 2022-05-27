@@ -88,6 +88,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				if(best.intBoard[r][c] == 1) {
 					tetris[r][c].changeColor(best.blockColor);
 				}
+				if(best.intBoard[r][c] == 2) {
+					tetris[r][c].changeColor(best.colorBoard[r][c]);
+				}
 			}
 		}
 
@@ -156,10 +159,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// ask the objects to paint themselves
 
 		bird.paint(g);
-		//one.paint(g);
-		//two.paint(g);
-		//three.paint(g);
-		//four.paint(g);
+		one.paint(g);
+		two.paint(g);
+		three.paint(g);
+		four.paint(g);
 		
 		// for(int r = 0; r < test.length; )
 		int red = ((int) (Math.random() * 255));
@@ -301,7 +304,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		if (best.gameOver == false) {
 			best.testFall();
-			
+		
 		}
 	}
 
@@ -343,7 +346,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.fallKey = true;
 		}
 		if (arg0.getKeyCode() == 32) {// Spacebar
-			best.previewLand();
+			best.spaceBar = true;
 		}
 		if (arg0.getKeyCode() == 38) {// Up Arrow
 			best.rotate(best.centerR, best.centerC);

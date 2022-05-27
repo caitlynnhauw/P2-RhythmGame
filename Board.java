@@ -22,11 +22,12 @@ public class Board {
 	boolean lineClearing = false;
 	boolean keyDown = false;
 	boolean timerStarted = false;
+	boolean spaceBar = false;
 	int topRowFilled = 0;
 	int sec = 0;
 	int fallSec = 0;
 	int clearRowIndex = 0;
-	int landingRow = 0;
+	int landingRow = 19;
 	int[] oneRows = new int[4];
 	int[] oneCols = new int[4];
 	int[] y = new int [4];
@@ -323,7 +324,10 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
-		//previewLand();
+		previewLand();
+		hardDrop();
+	
+		//System.out.println(Frame.currentTime);
 	}// end of update
 
 	public void updateBoolArr() {
@@ -539,6 +543,7 @@ public class Board {
 				if (board[r][c] == true && r != 19) {
 					if (intBoard[r + 1][c] == 2) {
 						test.start();
+						spaceBar = false;
 						timerStarted = true;
 						break;
 					}
@@ -557,6 +562,7 @@ public class Board {
 		for (int c = board[0].length - 1; c >= 0; c--) {
 			if (board[board.length - 1][c]) {
 				test.start();
+				spaceBar = false;
 				timerStarted = true;
 				centerR--;
 				
@@ -594,7 +600,7 @@ public class Board {
 		}
  
 		updateBoolArr();
-		System.out.println("lines cleared: " + linesCleared);
+		//System.out.println("lines cleared: " + linesCleared);
 		return true;
  
 		/*
@@ -783,7 +789,7 @@ public class Board {
 
 	}// end of moveleft
 
-	public String toString() {
+	public String toString(int[][] data) {
 		/*
 		 * for(int r = 0; r < board.length; r++) { for(int c = 0; c < board[0].length;
 		 * c++) { if(board[r][c] == true) { System.out.print(board[r][c] + "  "); }else
@@ -793,12 +799,12 @@ public class Board {
 		 */
 
 		/// *
-		for (int r = 0; r < intBoard.length; r++) {
-			for (int c = 0; c < intBoard[0].length; c++) {
-				if (intBoard[r][c] == 1) {
-					System.out.print(intBoard[r][c] + " ");
+		for (int r = 0; r < data.length; r++) {
+			for (int c = 0; c < data[0].length; c++) {
+				if (data[r][c] == 1) {
+					System.out.print(data[r][c] + " ");
 				} else {
-					System.out.print(intBoard[r][c] + " ");
+					System.out.print(data[r][c] + " ");
 				}
 			}
 			System.out.println("");
@@ -819,32 +825,43 @@ public class Board {
 				}
 			}
 		}
-		Frame.one.changeColor(blockColor);
+		Frame.one.changeColor("ghost");
 		Frame.one.setY(landingRow*35+(y[0]*35)+35);
 		Frame.one.setX(oneCols[0]*35+200);
 		
-		Frame.two.changeColor(blockColor);
+		Frame.two.changeColor("ghost");
 		Frame.two.setY(landingRow*35+(y[1]*35)+35);
 		Frame.two.setX(oneCols[1]*35+200);
 		
-		Frame.three.changeColor(blockColor);
+		Frame.three.changeColor("ghost");
 		Frame.three.setY(landingRow*35+(y[2]*35)+35);
 		Frame.three.setX(oneCols[2]*35+200);
 		
-		Frame.four.changeColor(blockColor);
+		Frame.four.changeColor("ghost");
 		Frame.four.setY(landingRow*35+(y[3]*35)+35);
 		Frame.four.setX(oneCols[3]*35+200);
 	}
+
+
 	
 	public void previewLand() {
 		findAllOnes();
-		for(int r = 0; r < intBoard.length; r++) {
-			
-			if(intBoard[r][centerC] != 2) {
+		for(int r = intBoard.length-2; r > 0; r--) {
+			if(intBoard[r + y[0]][oneCols[0]] == 2 || intBoard[r + y[1]][oneCols[1]] == 2 ||
+			   intBoard[r + y[2]][oneCols[2]] == 2 || intBoard[r + y[3]][oneCols[3]] == 2) {
 				landingRow = r;
 			}
+			
 		}
+		
 		System.out.println(landingRow);
+	}
+
+	
+	public void hardDrop() {
+		if(spaceBar) {
+			testFall();
+		}
 	}
 
 	
