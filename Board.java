@@ -8,7 +8,7 @@ public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
 	String[][] colorBoard = new String[20][10];
-	String[] randomBlock = { "T", "I", "S", "Z", "T", "L", "J" };
+	String[] randomBlock = { "O", "I", "S", "Z", "T", "L", "J" };
 	public static ArrayList<String> queue = new ArrayList<String>();
 	boolean testForNew = false;
 	boolean gameOver = false;
@@ -865,17 +865,30 @@ public class Board {
 	}
 	
 	public void previewLand() {
+		boolean result = false;
+		int difference = 2;
 		if(!queue.get(0).equals("O")) { //temp
+			if(queue.get(0).equals("I")) {
+				difference = 3;
+			}else {
+				difference = 2;
+			}
 		findAllOnes();
-		for(int r = intBoard.length-2; r > 0; r--) {
+		for(int r = intBoard.length-difference; r > 0; r--) {
 			if(intBoard[r + y[0]][oneCols[0]] == 2 || intBoard[r + y[1]][oneCols[1]] == 2 ||
 			   intBoard[r + y[2]][oneCols[2]] == 2 || intBoard[r + y[3]][oneCols[3]] == 2) {
 				landingRow = r;
 				System.out.println(landingRow);
 			}
+			if(intBoard[19][oneCols[1]] == 0 && intBoard[19][oneCols[2]] == 0 && intBoard[19][oneCols[3]] == 0) {
+				result = true;
+			}
 		}
+		System.out.println(result);
 		
 	}}
+	
+	
 	
 	public void hardDrop() {
 		if(spacebar) {
