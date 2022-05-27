@@ -346,7 +346,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			best.fallKey = true;
 		}
 		if (arg0.getKeyCode() == 32) {// Spacebar
-			best.spaceBar = true;
+			best.spacebar = true;
 		}
 		if (arg0.getKeyCode() == 38) {// Up Arrow
 			best.rotate(best.centerR, best.centerC);

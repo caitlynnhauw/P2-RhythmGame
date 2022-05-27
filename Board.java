@@ -8,12 +8,13 @@ public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
 	String[][] colorBoard = new String[20][10];
-	String[] randomBlock = { "O", "I", "S", "Z", "T", "L", "J" };
+	String[] randomBlock = { "T", "I", "S", "Z", "T", "L", "J" };
 	public static ArrayList<String> queue = new ArrayList<String>();
 	boolean testForNew = false;
 	boolean gameOver = false;
 	boolean isSZ = false;
 	boolean isI = false;
+	boolean isO = false;
 	boolean iRotate = false;
 	boolean fallKey = false;
 	boolean rightKey = false;
@@ -22,12 +23,16 @@ public class Board {
 	boolean lineClearing = false;
 	boolean keyDown = false;
 	boolean timerStarted = false;
-	boolean spaceBar = false;
+	boolean rotateKey;
+	boolean upRotate = false;
+	boolean canRotate = true;
+	boolean spacebar = false;
 	int topRowFilled = 0;
 	int sec = 0;
 	int fallSec = 0;
 	int clearRowIndex = 0;
 	int landingRow = 19;
+	int delayTimes = 350;
 	int[] oneRows = new int[4];
 	int[] oneCols = new int[4];
 	int[] y = new int [4];
@@ -69,6 +74,7 @@ public class Board {
 			}
 		}
 		spawnNewBlock();
+		delayTimes = 350;
 	}
 
 	public void spawn(String shape) {
@@ -89,6 +95,7 @@ public class Board {
 			}
 			isSZ = false;
 			isI = false;
+			isO = true;
 		}else if(shape.equals("test")) {
 			int width = 10;
 			int height = 2; 
@@ -102,6 +109,7 @@ public class Board {
 			}
 			isSZ = false;
 			isI = false;
+			isO = false;
 		}else if(shape.equals("I")) {
 			iRotate = false;
 			int width = 1;
@@ -126,9 +134,8 @@ public class Board {
 			}
 			isSZ = false;
 			isI = true;
+			isO = false;
 		}else if(shape.equals("S")) {
-			isSZ = true;
-			isI = false;
 			int width = 3;
 			int height = 2;
 			int i = 0;
@@ -161,9 +168,10 @@ public class Board {
 				}
 				i++;
 			}
-		}else if(shape.equals("Z")) {
 			isSZ = true;
 			isI = false;
+			isO = false;
+		}else if(shape.equals("Z")) {
 			int width = 3;
 			int height = 2;
 			int i = 0;
@@ -196,6 +204,9 @@ public class Board {
 				}
 				i++;
 			}
+			isSZ = true;
+			isI = false;
+			isO = false;
 		}else if(shape.equals("T")) {
 			int width = 3;
 			int height = 2;
@@ -231,6 +242,7 @@ public class Board {
 			}
 			isSZ = false;
 			isI = false;
+			isO = false;
 		}else if(shape.equals("J")) {
 			int width = 3;
 			int height = 2;
@@ -266,6 +278,7 @@ public class Board {
 			}
 			isSZ = false;
 			isI = false;
+			isO = false;
 		}else if(shape.equals("L")) {
 			int width = 3;
 			int height = 2;
@@ -301,6 +314,7 @@ public class Board {
 			}
 			isSZ = false;
 			isI = false;
+			isO = false;
 		}
 	}//end of spawn
 
@@ -326,8 +340,6 @@ public class Board {
 		}
 		previewLand();
 		hardDrop();
-	
-		//System.out.println(Frame.currentTime);
 	}// end of update
 
 	public void updateBoolArr() {
@@ -363,16 +375,18 @@ public class Board {
 			testForNew = false;
 		}
 	}
-
+	
 	public int[] ClockwiseTurn(int[] getter) { // clockwise turn repositions each element in a 9x9 array, to another
 												// position (based off its current one)
 		int[] temp = new int[9];
-
+		int first = 2;
+		int second = 1;
+		
 		for (int i = 0; i < 9; i++) {
 			temp[i] = getter[i];
 			// System.out.print(getter[i]);
 		}
-
+		
 		for (int i = 0; i < 9; i++) {
 			switch(i) {
 			case 0:
@@ -403,131 +417,136 @@ public class Board {
 				getter[6] = temp[i];
 				break;
 			}
-			}
-
+		}
+		
 		for (int i = 0; i < 9; i++) {
 			// System.out.print(getter[i]);
 		}
 
 		return getter;
 	}// end of clockwise rotate
-
+	
+	public boolean rightSurroundings() {
+		return false;
+	}
+	
 	public void rotate(int row, int col) {
 		int[] getter = new int[9];		   
 		int[] setter;
 		boolean isSet = false;
 		int count = 0;
-		int leftEdge = 0;
-		int rightEdge = 0;
-		int iRightEdge = 0;
+		int edge = 0;
+		
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[0].length; c++) {
-				if(intBoard[r][c] == 1 && c == 9) {
-					rightEdge++;
-				}else if(intBoard[r][c] == 1 && c == 0){
-					leftEdge++;
-				}else if(intBoard[r][c] == 1 && c == 8) {
-					iRightEdge++;
+				if(centerC != 0 && centerC != 9) {
+					if(intBoard[centerR][centerC] == 1) {
+						
+					}
 				}
 			}
 		}
-		if(rightEdge > 2 || rightEdge > 1 && isSZ == true) {
-			moveLeft();
-			rightEdge = 0;
-			leftEdge = 0;
-			iRightEdge = 0;
-			rotate(centerR, centerC);
-		}else if(leftEdge > 2 || leftEdge > 1 && isSZ == true) {
-			moveRight();
-			rightEdge = 0;
-			leftEdge = 0;
-			iRightEdge = 0;
-			rotate(centerR, centerC);
-		}else if(iRightEdge > 2 && isI == true) {
-			moveLeft();
-			rightEdge = 0;
-			leftEdge = 0;
-			iRightEdge = 0;
-			rotate(centerR, centerC);
-		}else if(intBoard[centerR+1][centerC] == 2 && leftEdge < 2 && rightEdge < 2 || centerR == 19 && leftEdge < 2 && rightEdge < 2) {
-			moveUp();
-			rightEdge = 0;
-			leftEdge = 0;
-			iRightEdge = 0;
-			rotate(centerR, centerC);
-		}else{
-			if(isI == true) {
-				if(iRotate == false) {
-					if(intBoard[centerR][centerC+2] == 2) {
-						isSet = true;
-					}else {
-						isSet = false;
-					}
-				}else{
-					if(intBoard[centerR+2][centerC] == 2) {
-						isSet = true;
-					}else {
-						isSet = false;
+		
+		if(isO == false) {
+			if(centerR == 19) {
+				moveUp();
+				rotate(centerR, centerC);
+			}else if(intBoard[centerR+1][centerC] == 2) {
+				moveUp();
+				rotate(centerR, centerC);
+			}else if(centerC == 0) {
+				moveRight();
+				rotate(centerR, centerC);
+			}else if(centerC == 9 && isI == true || centerC == 8 && isI == true) {
+				moveLeft();
+				rotate(centerR, centerC);
+			}else if(centerC == 9) {
+				moveLeft();
+				rotate(centerR, centerC);
+			}else{
+				if(centerC != 0 && centerC != 9) {
+					if(intBoard[centerR][centerC-1] == 2) {
+						moveRight();
+						rotate(centerR, centerC);
+					}else if(intBoard[centerR][centerC+1] == 2) {
+						moveLeft();
+						rotate(centerR, centerC);
 					}
 				}
-			}
-			for(int r = row-1; r < row+2; r++) {
-				for(int c = col-1; c < col+2; c++) {
-					getter[count] = intBoard[r][c];
-					count++;
-				}
-			}
-			count = 0;
-		
-			for(int i = 0; i < 9; i++) {
-				if(getter[i] == 2) {
-					isSet = true;
-				}
-			}
-		
-			if(isSet == false) {
-				setter = ClockwiseTurn(getter);
 				if(isI == true) {
 					if(iRotate == false) {
-						intBoard[centerR][centerC+2] = 1;
-						colorBoard[centerR][centerC+2] = blockColor;
-						intBoard[centerR+2][centerC] = 0;
-						colorBoard[centerR+2][centerC] = "darkteal";
-						iRotate = true;
+						if(intBoard[centerR][centerC+2] == 2) {
+							isSet = true;
+						}else {
+							isSet = false;
+						}
 					}else{
-						intBoard[centerR+2][centerC] = 1;
-						colorBoard[centerR+2][centerC] = blockColor;
-						intBoard[centerR][centerC+2] = 0;
-						colorBoard[centerR][centerC+2] = "darkteal";
-						iRotate = false;
+						if(intBoard[centerR+2][centerC] == 2) {
+							isSet = true;
+						}else {
+							isSet = false;
+						}
 					}
 				}
-		
-				for(int i = 0; i < 9; i++) {
-					getter[i] = setter[i];
-				}
-		
-				/*
-				for(int i = 0; i < 9; i++) {
-					if(i%3 == 0) {
-					System.out.println("");
-					}
-					System.out.print(getter[i]);
-				}
-			 	*/
-				
-				//setting the rotate
 				for(int r = row-1; r < row+2; r++) {
 					for(int c = col-1; c < col+2; c++) {
-						intBoard[r][c] = getter[count];
-						if(intBoard[r][c] == 1) {
-							colorBoard[r][c] = blockColor;
-						}
+						getter[count] = intBoard[r][c];
 						count++;
 					}
 				}
+				count = 0;
+			
+				for(int i = 0; i < 9; i++) {
+					if(getter[i] == 2) {
+						isSet = true;
+					}
+				}
+			
+				if(isSet == false) {
+					setter = ClockwiseTurn(getter);
+					if(isI == true) {
+						if(iRotate == false) {
+							intBoard[centerR][centerC+2] = 1;
+							colorBoard[centerR][centerC+2] = blockColor;
+							intBoard[centerR+2][centerC] = 0;
+							colorBoard[centerR+2][centerC] = "darkteal";
+							iRotate = true;
+						}else{
+							intBoard[centerR+2][centerC] = 1;
+							colorBoard[centerR+2][centerC] = blockColor;
+							intBoard[centerR][centerC+2] = 0;
+							colorBoard[centerR][centerC+2] = "darkteal";
+							iRotate = false;
+						}
+					}
+			
+					for(int i = 0; i < 9; i++) {
+						getter[i] = setter[i];
+					}
+			
+					/*
+					for(int i = 0; i < 9; i++) {
+						if(i%3 == 0) {
+						System.out.println("");
+						}
+						System.out.print(getter[i]);
+					}
+				 	*/
+					
+					//setting the rotate
+					for(int r = row-1; r < row+2; r++) {
+						for(int c = col-1; c < col+2; c++) {
+							intBoard[r][c] = getter[count];
+							if(intBoard[r][c] == 1) {
+								colorBoard[r][c] = blockColor;
+							}
+							count++;
+						}
+					}
+				}
 			}
 		}
+		
 	}//end of rotate
 
 	public void testFall() {
@@ -543,8 +562,8 @@ public class Board {
 				if (board[r][c] == true && r != 19) {
 					if (intBoard[r + 1][c] == 2) {
 						test.start();
-						spaceBar = false;
 						timerStarted = true;
+						spacebar = false;
 						break;
 					}
 					//System.out.print(isOnEdge(intBoard.length - r, intBoard[0].length - c));
@@ -562,10 +581,11 @@ public class Board {
 		for (int c = board[0].length - 1; c >= 0; c--) {
 			if (board[board.length - 1][c]) {
 				test.start();
-				spaceBar = false;
 				timerStarted = true;
-				centerR--;
-				
+				spacebar = false;
+				if(isOnEdge(0,0) == false) {
+					centerR--;
+				}
 			}
 		}
 		//System.out.println("CenterR is: " + centerR);
@@ -758,7 +778,7 @@ public class Board {
 	}// end of moveright
 
 	public void moveLeft() { // has a couple bugs
-		updateColorsLeft();
+		//updateColorsLeft();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -778,7 +798,9 @@ public class Board {
 				for (int c = 0; c < intBoard[0].length; c++) {
 					if (intBoard[r][c] == 1) {
 						intBoard[r][c - 1] = 1;
+						colorBoard[r][c-1] = blockColor;
 						intBoard[r][c] = 0;
+						colorBoard[r][c] = "darkteal";
 					}
 
 				}
@@ -789,7 +811,7 @@ public class Board {
 
 	}// end of moveleft
 
-	public String toString(int[][] data) {
+	public String toString() {
 		/*
 		 * for(int r = 0; r < board.length; r++) { for(int c = 0; c < board[0].length;
 		 * c++) { if(board[r][c] == true) { System.out.print(board[r][c] + "  "); }else
@@ -799,12 +821,12 @@ public class Board {
 		 */
 
 		/// *
-		for (int r = 0; r < data.length; r++) {
-			for (int c = 0; c < data[0].length; c++) {
-				if (data[r][c] == 1) {
-					System.out.print(data[r][c] + " ");
+		for (int r = 0; r < intBoard.length; r++) {
+			for (int c = 0; c < intBoard[0].length; c++) {
+				if (intBoard[r][c] == 1) {
+					System.out.print(intBoard[r][c] + " ");
 				} else {
-					System.out.print(data[r][c] + " ");
+					System.out.print(intBoard[r][c] + " ");
 				}
 			}
 			System.out.println("");
@@ -841,25 +863,22 @@ public class Board {
 		Frame.four.setY(landingRow*35+(y[3]*35)+35);
 		Frame.four.setX(oneCols[3]*35+200);
 	}
-
-
 	
 	public void previewLand() {
+		if(!queue.get(0).equals("O")) { //temp
 		findAllOnes();
 		for(int r = intBoard.length-2; r > 0; r--) {
 			if(intBoard[r + y[0]][oneCols[0]] == 2 || intBoard[r + y[1]][oneCols[1]] == 2 ||
 			   intBoard[r + y[2]][oneCols[2]] == 2 || intBoard[r + y[3]][oneCols[3]] == 2) {
 				landingRow = r;
+				System.out.println(landingRow);
 			}
-			
 		}
 		
-		System.out.println(landingRow);
-	}
-
+	}}
 	
 	public void hardDrop() {
-		if(spaceBar) {
+		if(spacebar) {
 			testFall();
 		}
 	}
@@ -883,6 +902,12 @@ public class Board {
 	
 	public void times() {
 		if(keyDown == true && timerStarted == true) {
+			if(rotateKey == false) {
+				delayTimes = 100;
+			}else {
+				delayTimes = 350;
+			}
+			
 			test.restart();
 		}
 	}
@@ -896,5 +921,8 @@ public class Board {
 		
 	};
 	
-	Timer test = new Timer(350, delay);
+	Timer test = new Timer(delayTimes, delay);
 }
+
+
+
