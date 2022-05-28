@@ -339,7 +339,6 @@ public class Board {
 			System.out.println("Game Over");
 		}
 		previewLand();
-		hardDrop();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -878,9 +877,14 @@ public class Board {
 	}}
 	
 	public void hardDrop() {
-		if(spacebar) {
-			testFall();
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(isOnEdge(r, c) == false) {
+					testFall();
+				}
+			}
 		}
+		setEmpty();
 	}
 
 	
