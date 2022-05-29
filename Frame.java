@@ -91,6 +91,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				if(best.intBoard[r][c] == 2) {
 					tetris[r][c].changeColor(best.colorBoard[r][c]);
 				}
+				if(best.copyBoard[r][c] == 1 && best.intBoard[r][c] == 0) {
+					tetris[r][c].changeColor("ghost");
+				}
 			}
 		}
 
@@ -101,7 +104,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 		for (int i = 1; i < Board.queue.size(); i++) {
-
 			Blocks.nextMoves(i, nextBlocks);
 		}
 		for (int r = 0; r < currBlock.length; r++) {
@@ -262,8 +264,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			} else if (Board.getTotalLinesCleared() >= 60) {
 				level = 4;
 				currentTime -= 50;
+			}
 		}
-	}
 	}
 
 
@@ -312,7 +314,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	@Override public void actionPerformed(ActionEvent e){
 		best.clearLine();
-		if(best.isOnEdge(0, 0) == false) {
+		if(best.isOnEdge(0, 0, best.intBoard) == false) {
 			best.test.restart();
 			best.test.stop();
 		}

@@ -7,6 +7,7 @@ import javax.swing.Timer;
 public class Board {
 	boolean[][] board = new boolean[20][10];
 	int[][] intBoard = new int[20][10];
+	int[][] copyBoard = new int[20][10];
 	String[][] colorBoard = new String[20][10];
 	String[] randomBlock = { "T", "I", "S", "Z", "T", "L", "J" };
 	public static ArrayList<String> queue = new ArrayList<String>();
@@ -52,11 +53,12 @@ public class Board {
 				board[r][c] = false;
 				intBoard[r][c] = 0;
 				colorBoard[r][c] = "navy";
+				copyBoard[r][c] = 0;
 				
 			}
 		}
 	}
-
+	
 	public void setEmpty() {
 		test.stop();
 		timerStarted = false;
@@ -68,6 +70,7 @@ public class Board {
 
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
+				copyBoard[r][c] = 0;
 				if (intBoard[r][c] == 1) {
 					intBoard[r][c] = 2;
 				}
@@ -76,7 +79,36 @@ public class Board {
 		spawnNewBlock();
 		delayTimes = 350;
 	}
-
+	
+	public void updateCopy() {
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				
+			}
+		}
+		
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				copyBoard[r][c] = intBoard[r][c];
+			}
+		}
+	}
+	
+	public void copyHardDrop() {
+		for(int r = 0; r < intBoard.length; r++) {
+			for(int c = 0; c < intBoard[0].length; c++) {
+				if(isOnEdge(r, c, copyBoard) == false) {
+					copyFall();
+				}
+			}
+		}
+	}
+	
+	public void preview() {
+		updateCopy();
+		copyHardDrop();
+	}
+	
 	public void spawn(String shape) {
 		if(shape.equals("O")) {
 			int width = 2;
@@ -338,7 +370,7 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
-		previewLand();
+		preview();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -551,13 +583,12 @@ public class Board {
 	public void testFall() {
 		updateBoolArr();
 		updateColors();
-		boolean holder = isOnEdge(0, 0);
-		if(isOnEdge(0,0) == false) {
+		boolean holder = isOnEdge(0, 0, intBoard);
+		if(isOnEdge(0, 0, intBoard) == false) {
 			centerR++;
 		}
 		for (int r = board.length - 1; r >= 0; r--) {
 			for (int c = board[0].length - 1; c >= 0; c--) {
-
 				if (board[r][c] == true && r != 19) {
 					if (intBoard[r + 1][c] == 2) {
 						test.start();
@@ -566,7 +597,7 @@ public class Board {
 						break;
 					}
 					//System.out.print(isOnEdge(intBoard.length - r, intBoard[0].length - c));
-					if(isOnEdge(intBoard.length - r, intBoard[0].length - c) == false && board[r+1][c] == false && holder == false) {
+					if(isOnEdge(intBoard.length - r, intBoard[0].length - c, intBoard) == false && board[r+1][c] == false && holder == false) {
 						board[r + 1][c] = board[r][c];
 						intBoard[r + 1][c] = 1;
 						colorBoard[r + 1][c] = colorBoard[r][c];
@@ -582,7 +613,7 @@ public class Board {
 				test.start();
 				timerStarted = true;
 				spacebar = false;
-				if(isOnEdge(0,0) == false) {
+				if(isOnEdge(0,0, intBoard) == false) {
 					centerR--;
 				}
 			}
@@ -590,8 +621,25 @@ public class Board {
 		//System.out.println("CenterR is: " + centerR);
 		
 		//toString();
+	}//end of testFall
+	
+	public void copyFall() {
+		boolean holder = isOnEdge(0, 0, copyBoard);
+		for (int r = board.length - 1; r >= 0; r--) {
+			for (int c = board[0].length - 1; c >= 0; c--) {
+				if (copyBoard[r][c] == 1 && r != 19) {
+					if (intBoard[r + 1][c] == 2) {
+						break;
+					}
+					if(isOnEdge(intBoard.length - r, intBoard[0].length - c, intBoard) == false && copyBoard[r+1][c] == 0 && holder == false) {
+						copyBoard[r + 1][c] = copyBoard[r][c];
+						copyBoard[r][c] = 0;
+					}
+				}
+			}
+		}
 	}
-
+	
 	public boolean isRowFilled(int[] row) {
 		for(int i = 0; i < row.length; i++) {
 			if(row[i] != 2) {
@@ -711,6 +759,7 @@ public class Board {
 
 	public void moveUp() {
 		//updateColorsUp();
+		updateCopy();
 		boolean isEdge = false;
 		for (int r = 1; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -744,6 +793,7 @@ public class Board {
 
 	public void moveRight() { // has a couple bugs
 		//updateColorsRight();
+		updateCopy();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -778,6 +828,7 @@ public class Board {
 
 	public void moveLeft() { // has a couple bugs
 		//updateColorsLeft();
+		updateCopy();
 		boolean isEdge = false;
 		for (int r = 0; r < intBoard.length; r++) {
 			for (int c = 0; c < intBoard[0].length; c++) {
@@ -865,21 +916,21 @@ public class Board {
 	
 	public void previewLand() {
 		if(!queue.get(0).equals("O")) { //temp
-		findAllOnes();
-		for(int r = intBoard.length-2; r > 0; r--) {
-			if(intBoard[r + y[0]][oneCols[0]] == 2 || intBoard[r + y[1]][oneCols[1]] == 2 ||
-			   intBoard[r + y[2]][oneCols[2]] == 2 || intBoard[r + y[3]][oneCols[3]] == 2) {
-				landingRow = r;
-				System.out.println(landingRow);
+			findAllOnes();
+			for(int r = intBoard.length-2; r > 1; r--) {
+				if(intBoard[r + y[0]][oneCols[0]] == 2 || intBoard[r + y[1]][oneCols[1]] == 2 ||
+				   intBoard[r + y[2]][oneCols[2]] == 2 || intBoard[r + y[3]][oneCols[3]] == 2) {
+					landingRow = r;
+					System.out.println(landingRow);
+				}
 			}
 		}
-		
-	}}
+	}
 	
 	public void hardDrop() {
 		for(int r = 0; r < intBoard.length; r++) {
 			for(int c = 0; c < intBoard[0].length; c++) {
-				if(isOnEdge(r, c) == false) {
+				if(isOnEdge(r, c, intBoard) == false) {
 					testFall();
 				}
 			}
@@ -888,14 +939,14 @@ public class Board {
 	}
 
 	
-	public boolean isOnEdge(int row, int col) {
-		for(int r = intBoard.length-1 - row; r > -1; r--) {
-			for(int c = intBoard[0].length-1 - col; c > -1; c--) {
+	public boolean isOnEdge(int row, int col, int[][] data) {
+		for(int r = data.length-1 - row; r > -1; r--) {
+			for(int c = data[0].length-1 - col; c > -1; c--) {
 				if(r != 19) {
-					if(intBoard[r][c] == 1 && intBoard[r+1][c] == 2) {
+					if(data[r][c] == 1 && data[r+1][c] == 2) {
 						return true;
 					}
-				}else if(r == 19 && intBoard[r][c] == 1) {
+				}else if(r == 19 && data[r][c] == 1) {
 					return true;
 				}
 			}
