@@ -79,7 +79,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 		*/
-		
+		 
 		for(int r = 0; r < best.intBoard.length; r++) {
 			for(int c = 0; c < best.intBoard[r].length; c++) {
 				if(best.intBoard[r][c] == 0) {
@@ -92,7 +92,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 					tetris[r][c].changeColor(best.colorBoard[r][c]);
 				}
 				if(best.copyBoard[r][c] == 1 && best.intBoard[r][c] == 0) {
-					tetris[r][c].changeColor("ghost");
+					tetris[r][c].changeColor(best.colorBoard[r][c]);
 				}
 			}
 		}
@@ -352,6 +352,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if (arg0.getKeyCode() == 38) {// Up Arrow
 			best.rotate(best.centerR, best.centerC);
+			best.times();
 			best.keyDown = true;
 		}
 		if (arg0.getKeyCode() == 39) {// ->

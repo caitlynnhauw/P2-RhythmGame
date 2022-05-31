@@ -28,6 +28,7 @@ public class Board {
 	boolean upRotate = false;
 	boolean canRotate = true;
 	boolean spacebar = false;
+	boolean isSet1 = false;
 	int topRowFilled = 0;
 	int sec = 0;
 	int fallSec = 0;
@@ -102,6 +103,8 @@ public class Board {
 				}
 			}
 		}
+		
+		updateColors();
 	}
 	
 	public void preview() {
@@ -348,6 +351,7 @@ public class Board {
 			isI = false;
 			isO = false;
 		}
+		preview();
 	}//end of spawn
 
 	public void update() {
@@ -370,7 +374,6 @@ public class Board {
 			gameOver = true;
 			System.out.println("Game Over");
 		}
-		preview();
 	}// end of update
 
 	public void updateBoolArr() {
@@ -409,51 +412,67 @@ public class Board {
 	
 	public int[] ClockwiseTurn(int[] getter) { // clockwise turn repositions each element in a 9x9 array, to another
 												// position (based off its current one)
-		int[] temp = new int[9];
+		int[] setter = new int[9];
 		int first = 2;
 		int second = 1;
-		
 		for (int i = 0; i < 9; i++) {
-			temp[i] = getter[i];
+			setter[i] = getter[i];
 			// System.out.print(getter[i]);
 		}
 		
 		for (int i = 0; i < 9; i++) {
 			switch(i) {
 			case 0:
-				getter[2] = temp[i];
+				if(setter[i] != 2 && getter[2] != 2) {
+					getter[2] = setter[i];
+				}
 				break;
 			case 1:
-				getter[5] = temp[i];
+				if(setter[i] != 2 && getter[5] != 2) {
+					getter[5] = setter[i];
+				}
 				break;
 			case 2:
-				getter[8] = temp[i];
+				if(setter[i] != 2 && getter[8] != 2) {
+					getter[8] = setter[i];
+				}
 				break;
 			case 3:
-				getter[1] = temp[i];
+				if(setter[i] != 2 && getter[1] != 2) {
+					getter[1] = setter[i];
+				}
 				break;
 			case 4:
-				getter[4] = temp[i];
+				if(setter[i] != 2 && getter[4] != 2) {
+					getter[4] = setter[i];
+				}
 				break;
 			case 5:
-				getter[7] = temp[i];
+				if(setter[i] != 2 && getter[7] != 2) {
+					getter[7] = setter[i];
+				}
 				break;
 			case 6:
-				getter[0] = temp[i];
+				if(setter[i] != 2 && getter[0] != 2) {
+					getter[0] = setter[i];
+				}
 				break;
 			case 7:
-				getter[3] = temp[i];
+				if(setter[i] != 2 && getter[3] != 2) {
+					getter[3] = setter[i];
+				}
 				break;
 			case 8:
-				getter[6] = temp[i];
+				if(setter[i] != 2 && getter[6] != 2) {
+					getter[6] = setter[i];
+				}
 				break;
 			}
 		}
 		
 		for (int i = 0; i < 9; i++) {
-			// System.out.print(getter[i]);
+			//System.out.print(getter[i]);
 		}
-
 		return getter;
 	}// end of clockwise rotate
 	
@@ -465,18 +484,8 @@ public class Board {
 		int[] getter = new int[9];		   
 		int[] setter;
 		boolean isSet = false;
+		boolean temp = false;
 		int count = 0;
-		int edge = 0;
-		
-		for(int r = 0; r < intBoard.length; r++) {
-			for(int c = 0; c < intBoard[0].length; c++) {
-				if(centerC != 0 && centerC != 9) {
-					if(intBoard[centerR][centerC] == 1) {
-						
-					}
-				}
-			}
-		}
 		
 		if(isO == false) {
 			if(centerR == 19) {
@@ -485,99 +494,103 @@ public class Board {
 			}else if(intBoard[centerR+1][centerC] == 2) {
 				moveUp();
 				rotate(centerR, centerC);
+				if(isI == true) {
+					if(intBoard[centerR+2][centerC] == 2) {
+						moveUp();
+						moveUp();
+						rotate(centerR, centerC);
+					}
+				}
 			}else if(centerC == 0) {
 				moveRight();
 				rotate(centerR, centerC);
+				temp = true;
 			}else if(centerC == 9 && isI == true || centerC == 8 && isI == true) {
 				moveLeft();
 				rotate(centerR, centerC);
 			}else if(centerC == 9) {
 				moveLeft();
 				rotate(centerR, centerC);
-			}else{
-				if(centerC != 0 && centerC != 9) {
-					if(intBoard[centerR][centerC-1] == 2) {
-						moveRight();
-						rotate(centerR, centerC);
-					}else if(intBoard[centerR][centerC+1] == 2) {
-						moveLeft();
-						rotate(centerR, centerC);
-					}
-				}
-				if(isI == true) {
-					if(iRotate == false) {
-						if(intBoard[centerR][centerC+2] == 2) {
-							isSet = true;
-						}else {
-							isSet = false;
-						}
-					}else{
-						if(intBoard[centerR+2][centerC] == 2) {
-							isSet = true;
-						}else {
-							isSet = false;
-						}
-					}
-				}
-				for(int r = row-1; r < row+2; r++) {
-					for(int c = col-1; c < col+2; c++) {
-						getter[count] = intBoard[r][c];
-						count++;
-					}
-				}
-				count = 0;
-			
-				for(int i = 0; i < 9; i++) {
-					if(getter[i] == 2) {
-						isSet = true;
-					}
-				}
-			
-				if(isSet == false) {
-					setter = ClockwiseTurn(getter);
+			}else if(centerC != 0 && centerC != 9) {
+				if(intBoard[centerR][centerC-1] == 2) {
+					moveRight();
+					rotate(centerR, centerC);
+				}else if(intBoard[centerR][centerC+1] == 2) {
+					moveLeft();
+					rotate(centerR, centerC);
+				}else {
 					if(isI == true) {
 						if(iRotate == false) {
-							intBoard[centerR][centerC+2] = 1;
-							colorBoard[centerR][centerC+2] = blockColor;
-							intBoard[centerR+2][centerC] = 0;
-							colorBoard[centerR+2][centerC] = "darkteal";
-							iRotate = true;
+							if(intBoard[centerR][centerC+2] == 2) {
+								isSet = true;
+							}else {
+								isSet = false;
+							}
 						}else{
-							intBoard[centerR+2][centerC] = 1;
-							colorBoard[centerR+2][centerC] = blockColor;
-							intBoard[centerR][centerC+2] = 0;
-							colorBoard[centerR][centerC+2] = "darkteal";
-							iRotate = false;
+							if(intBoard[centerR+2][centerC] == 2) {
+								isSet = true;
+							}else {
+								isSet = false;
+							}
 						}
 					}
-			
-					for(int i = 0; i < 9; i++) {
-						getter[i] = setter[i];
-					}
-			
-					/*
-					for(int i = 0; i < 9; i++) {
-						if(i%3 == 0) {
-						System.out.println("");
-						}
-						System.out.print(getter[i]);
-					}
-				 	*/
-					
-					//setting the rotate
 					for(int r = row-1; r < row+2; r++) {
 						for(int c = col-1; c < col+2; c++) {
-							intBoard[r][c] = getter[count];
-							if(intBoard[r][c] == 1) {
-								colorBoard[r][c] = blockColor;
-							}
+							getter[count] = intBoard[r][c];
 							count++;
+						}
+					}
+					count = 0;
+					for(int i = 0; i < 9; i++) {
+						if(getter[i] == 2) {
+							//isSet = true;
+						}
+					}
+					if(isSet == false) {
+						setter = ClockwiseTurn(getter);
+						if(isI == true) {
+							if(iRotate == false) {
+								intBoard[centerR][centerC+2] = 1;
+								colorBoard[centerR][centerC+2] = blockColor;
+								intBoard[centerR+2][centerC] = 0;
+								colorBoard[centerR+2][centerC] = "darkteal";
+								iRotate = true;
+							}else{
+								intBoard[centerR+2][centerC] = 1;
+								colorBoard[centerR+2][centerC] = blockColor;
+								intBoard[centerR][centerC+2] = 0;
+								colorBoard[centerR][centerC+2] = "darkteal";
+								iRotate = false;
+							}
+						}
+						for(int i = 0; i < 9; i++) {
+							getter[i] = setter[i];
+						}
+				
+						///*
+						for(int i = 0; i < 9; i++) {
+							if(i%3 == 0) {
+							System.out.println("");
+							}
+							System.out.print(getter[i]);
+						}
+					 	//*/
+						
+						//setting the rotate
+						for(int r = row-1; r < row+2; r++) {
+							for(int c = col-1; c < col+2; c++) {
+								intBoard[r][c] = getter[count];
+								if(intBoard[r][c] == 1) {
+									colorBoard[r][c] = blockColor;
+								}
+								count++;
+							}
 						}
 					}
 				}
 			}
 		}
-		
+		preview();
 	}//end of rotate
 
 	public void testFall() {
@@ -667,9 +680,8 @@ public class Board {
 		}
  
 		updateBoolArr();
-		//System.out.println("lines cleared: " + linesCleared);
+		preview();
 		return true;
- 
 		/*
 		 * for (int r = board.length - 1; r > 0; r--) { int count = 0; for (int c = 0; c
 		 * < board[r].length; c++) { if (intBoard[r][c] == 2) { count++; } }
@@ -718,6 +730,9 @@ public class Board {
 			for(int c = 0; c < colorBoard[0].length; c++) {
 				if(intBoard[r][c] == 1 && r != 19  && intBoard[r+1][c] != 2) {
 					colorBoard[r+1][c] = blockColor;
+				}
+				if(copyBoard[r][c] == 1 && intBoard[r][c] == 0) {
+					colorBoard[r][c] = "ghost";
 				}
 			}
 		}
@@ -789,6 +804,7 @@ public class Board {
 			centerR--;
 			// System.out.println("Current centerC: " + centerC);
 		}
+		preview();
 	}
 
 	public void moveRight() { // has a couple bugs
@@ -823,7 +839,7 @@ public class Board {
 			centerC++;
 			// System.out.println("Current centerC: " + centerC);
 		}
-
+		preview();
 	}// end of moveright
 
 	public void moveLeft() { // has a couple bugs
@@ -858,7 +874,7 @@ public class Board {
 			centerC--;
 			// System.out.println("Current centerC: " + centerC);
 		}
-
+		preview();
 	}// end of moveleft
 
 	public String toString() {
